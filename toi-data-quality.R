@@ -24,7 +24,7 @@ e <- "Laptop" #'R Drive', 'C Drive'
 
 if(e == 'Laptop') {
       
-      setwd("D:/OneDrive/Work Files/Wilko/Data Cleanse/R Scripts")
+      setwd("D:/OneDrive/R Projects/product-attributes")
       toi.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/TOI/"
 }
 
