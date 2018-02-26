@@ -203,9 +203,32 @@ for(i in 1:NROW(toi.compare)) {
             toi.compare$change[i] <- "Infill"
       }
       
+      else if (is.na(original.size[i]) && is.na(update.size[i])) {
+      
+            toi.compare$change[i] <- "Keep"
+            
       }
+      else if (!is.na(original.size[i]) && is.na(update.size[i])) {
+                  
+            toi.compare$change[i] <- "Blank"     
+      }
+            
+            
+      else if (as.character(original.size[i]) == as.character(update.size[i])) {
+                  
+                  toi.compare$change[i] <- "Keep"     
+      }
+            
+      else  {
+                  
+                  toi.compare$change[i] <- "Update"     
+      }     
+            
+            
+      
+}
 
-size.change <- subset(toi.compare,change == "Infill")
+size.change <- subset(toi.compare,change == "Infill" | toi.compare$change == "Update")
 
 #------------------------------------------------------------------------------------------------------------------------------
 rm(list= ls()[!(ls() %in% c("toi.products","toi.original","size.change"))]) 
