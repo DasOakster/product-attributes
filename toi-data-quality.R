@@ -15,8 +15,8 @@
 
 # Select file
 
-#file.to.cleanse <- "WIP/TOI_WIP_V9.csv"
-file.to.cleanse <- "Original Data/TOI_Original.csv"
+file.to.score <- "WIP/TOI_WIP_V9.csv"
+file.to.compare <- "Original Data/TOI_Original.csv"
 
 # Environment
 
@@ -56,8 +56,8 @@ csf.toi.type.size <- Size.Required[,1]
 #------------------------------------------------------------------------------------------------------------------------------
 # Read in data set for scoring
 
-toi.products <- read.csv(paste(toi.dir,file.to.cleanse,sep=""))
-
+toi.products <- read.csv(paste(toi.dir,file.to.score,sep=""))
+toi.original <- read.csv(paste(toi.dir,file.to.compare,sep=""))
 
 # Add columns to flag the check status of the product for size
 
@@ -182,7 +182,30 @@ output.cols <- c("PSA_1",
 "Title.Brand.Score"
 )
 
+#------------------------------------------------------------------------------------------------------------------------------
 write.csv(toi.products[,output.cols],paste(toi.dir,"TOI_DQ_Data.csv",sep = ""),row.names = FALSE)
 #------------------------------------------------------------------------------------------------------------------------------
 
-rm(list= ls()[!(ls() %in% c("toi.products"))]) 
+#------------------------------------------------------------------------------------------------------------------------------
+toi.compare <- merge(toi.original,toi.products,by.x = "Article",by.y = "Article")
+toi.compare <- toi.compare[,c("PSA_1.x","PSA_2.x","Article","Web.Description.x","Size.x","Size.y")]
+toi.compare$change <- NA
+
+
+for(i in 1:NROW(toi.compare)) {
+
+      original.size <- toi.compare$Size.x
+      update.size <- toi.compare$Size.y
+      
+            
+      if(is.na(original.size[i]) && !is.na(update.size[i])) {
+            
+            toi.compare$change[i] <- "Infill"
+      }
+      
+      }
+
+size.change <- subset(toi.compare,change == "Infill")
+
+#------------------------------------------------------------------------------------------------------------------------------
+rm(list= ls()[!(ls() %in% c("toi.products","toi.original","size.change"))]) 
