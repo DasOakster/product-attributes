@@ -25,11 +25,8 @@ dq.score.pack.qty.format <- function(product.data, reg.ex) {
                   product.data$Pack.Qty.Format.Score[i] <- dq.rule.2.score
             }
             
-            
-            
       }
       
- 
       return(product.data)
 }
 
@@ -143,24 +140,31 @@ for(i in 1:NROW(product.data)) {
 
 dq.score.title.pack.qty <- function(product.data) {
 
-      product.data$Title.Pack.Qty.Score <- 0
-      product.data$Title.Pack.Qty <- "PASS"
+for(i in 1:NROW(product.data)) {
       
-      for(i in 1:NROW(product.data)) {
+      pack.qty <- product.data$Pack.Qty[i]
+      
+      if (is.na(product.data$Pack.Qty[i])) {
             
-            if(grepl("[0-9]{1,3}pk$",product.data$Web.Description[i],perl = TRUE) == TRUE) {
-                  
-                  if(grepl("[0-9]{1,3}pk$",product.data$Pack.Qty[i],perl = TRUE) == TRUE) {
-                        product.data$Title.Pack.Qty[i] <- "PASS"
-                  }
-                  
-                  else {
-                        product.data$Title.Pack.Qty[i] <- "FAIL"
-                        product.data$Title.Pack.Qty.Score[i] <- -50
-                  }
-                  
-            }
+            product.data$Title.Pack.Qty.Score[i] <- 0
+            product.data$Title.Pack.Qty[i] <- "PASS"
       }
+      
+      
+     else if(grepl(pack.qty,product.data$Web.Description[i]) == TRUE) {
+            
+            product.data$Title.Pack.Qty[i] <- "PASS"
+            product.data$Title.Pack.Qty.Score[i] <- 0
+      }
+      
+      
+      else  {
+            
+            product.data$Title.Pack.Qty[i] <- "CHECK"
+            product.data$Title.Pack.Qty.Score[i] <- 0
+      }
+      
+}
 
       return(product.data)
 }
@@ -171,8 +175,6 @@ dq.score.title.pack.qty <- function(product.data) {
 
 dq.score.title.size <- function(product.data) {
 
-size.pattern <- "[0-9]{1,4}(\\.[0-9]{1,2})?(g|ml)$"
-      
 for(i in 1:NROW(product.data)) {
       
       size <- product.data$Size[i]
@@ -185,25 +187,16 @@ for(i in 1:NROW(product.data)) {
       }
       
       # Check if values matched
-      else if (grepl(size,product.data$Web.Description[i],perl = TRUE) == TRUE) {
+      else if (grepl(size,product.data$Web.Description[i]) == TRUE) {
             
             product.data$Title.Size[i] <- "PASS"
             product.data$Title.Size.Score[i] <- 0
       }
       
-      #  Fail if title ends in ml, L, g, kg and the size attribute doesn't match
-      
-
-      
-            else if (grepl(size.pattern,product.data$Web.Description[i],perl = TRUE) == TRUE && grepl(size,product.data$Web.Description[i],perl = TRUE) == FALSE){
-            
-            product.data$Title.Size[i] <- "FAIL"
-            product.data$Title.Size.Score[i] <- -50
-      }
-      
+      #  Fail if populated and doesn't match
       else {
             
-            product.data$Title.Size[i] <- "PASS"
+            product.data$Title.Size[i] <- "CHECK"
             product.data$Title.Size.Score[i] <- 0
       }
 }
@@ -289,27 +282,5 @@ dq.score.size.required <- function(product.data) {
             }
             
       }
-      return(product.data)
-}
-
-#---------------------------------------------------------------------------------------------------------------------------------------------
-dq.score.material.format <- function(product.data, reg.ex) {
-      
-      for (i in 1:NROW(product.data)) {
-            if (grepl(reg.ex, product.data$Material[i], perl = TRUE) == TRUE || is.na(product.data$Material[i])) {
-                  
-                  product.data$Material.Format[i] <- "PASS"
-                  product.data$Material.Format.Score[i] <- 0
-            }
-            
-            
-            else {
-                  
-                  product.data$Material.Format[i] <- "FAIL"
-                  product.data$Material.Format.Score[i] <- dq.rule.2.score
-            }
-            
-      }
-      
       return(product.data)
 }

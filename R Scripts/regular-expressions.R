@@ -2,7 +2,7 @@
 
 # Regular Expressions for Weights
 
- check.weight <<- "^[0-9]{1,4}(\\.[0-9]{1,2})?(mg|g|kg|ml|L)$"
+ check.weight <<- "^[0-9]{1,4}(\\.[0-9]{1,2})?(mg|g|kg|ml|L|)$"
  
 # Regular Expressions for Sizes 
 
@@ -46,14 +46,8 @@
  
  # Minor web title formatting errors
 
- toi.web.desc.err <<- "2in1|EDT|\\&|Bodywash|Eyedrops|Bathtime|Bodyspray|Dryskin|Footcare|Lipgloss|Lipliner|Facewash|Coolmint|Nailpolish|Supergel|Supershine|Hayfever|Footcare|Aquaproof|Cremepuff"
  
- # Regular Expressions for Material
- 
- check.material.cat <- "^Wood$|^Metal$|^Paper$|^Ceramics$|^Fabric$|^Plastic$|^Other$"
- check.material.value <- "^Ash$|^Chipboard$|^Cork$|^Eucalyptus$|^MDF$|^Oak$|^Particleboard$|^Pine$|^Recycled Board$|^Softwood$|^Wicker$|^Willow$|^Aluminium$|^Brass$|^Chrome$|^Copper$|^Gold$|^Iron$|^Silver$|^Stainless Steel$|^Cardboard$|^Greyboard$|^Paper$|^China$|^Glass$|^Porcelain$|^Cotton$|^Elastane$|^Nylon$|^Polycotton$|^Polyester$|^Viscose$|^Acrylic$|^Fiberglass$|^Graphite$|^Latex$|^Melamine$|^PES$|^Polyamide$|^Polycarbonate$|^Polyethylene$|^Polypropylene$|^PVA$|^PVC$|^Vinyl$|^Bassine$|^Canvas$|^Coir$|^Faux Leather$|^Foam$|^Jute$|^Microfibre$|^Rubber$|"      
- 
- check.material <- paste(check.material.cat,"|",check.material.value) 
+toi.web.desc.err <<- "2in1|EDT|\\&|Bodywash|Eyedrops|Bathtime|Bodyspray|Dryskin|Footcare|Lipgloss|Lipliner|Facewash|Coolmint|Nailpolish|Supergel|Supershine|Hayfever|Footcare|Aquaproof|Cremepuff"
  
 #------------------------------------------------------------------------------------------------------------------------
 
