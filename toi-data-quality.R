@@ -15,7 +15,7 @@
 
 # Select file
 
-file.to.score <- "WIP/TOI_WIP_V9.csv"
+file.to.score <- "WIP/TOI_WIP_V10.csv"
 file.to.compare <- "Original Data/TOI_Original.csv"
 
 # Environment
@@ -24,7 +24,7 @@ e <- "Laptop" #'R Drive', 'C Drive'
 
 if(e == 'Laptop') {
       
-      setwd("D:/OneDrive/Work Files/Wilko/Data Cleanse/R Scripts")
+      setwd("D:/OneDrive/R Projects/product-attributes")
       toi.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/TOI/"
 }
 
@@ -42,6 +42,7 @@ if(e == 'R Drive') {
 
 source("regular-expressions.R")
 source("data-checking-functions.R")
+source("split-files.R")
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -69,6 +70,8 @@ toi.products$Pack.Qty.Format <- NA
 toi.products$Pack.Qty.Format.Score <- 0
 toi.products$Colour.Format <- NA
 toi.products$Colour.Format.Score <- 0
+toi.products$Material.Format <- NA
+toi.products$Material.Format.Score <- 0
 
 # Required Fields
 
@@ -104,6 +107,7 @@ toi.products$Title.Brand.Score <- 0
 toi.products <- dq.score.colour.format(toi.products,check.colour)
 toi.products <- dq.score.pack.qty.format(toi.products,check.pack.qty)
 toi.products <- dq.score.size.format(toi.products,paste(check.size.all))
+toi.products <- dq.score.material.format(toi.products,check.material)
 
 #******************************************************************************************************************************
 #  Data Integrity
@@ -130,8 +134,9 @@ dq.scores <- c("Colour.Format.Score",
                         "Size.Required.Score",
                         "Colour.Required.Score",
                         "Pack.Or.Size.Score",
+                        "Material.Format.Score",
                         "Title.Size.Score",
-                        "Title.Size.Score",
+                        "Title.Pack.Qty.Score",
                         "Title.Brand.Score",
                         "Title.Spelling.Score")
 
@@ -176,6 +181,8 @@ output.cols <- c("PSA_1",
 "Size.Required.Score",
 "Colour.Required.Score",
 "Pack.Or.Size.Score",
+"Material.Format",
+"Material.Format.Score",
 "Title.Spelling.Score",
 "Title.Size.Score",
 "Title.Pack.Qty.Score",
@@ -186,50 +193,9 @@ output.cols <- c("PSA_1",
 write.csv(toi.products[,output.cols],paste(toi.dir,"TOI_DQ_Data.csv",sep = ""),row.names = FALSE)
 #------------------------------------------------------------------------------------------------------------------------------
 
+rm(list= ls()[!(ls() %in% c("toi.products","toi.original","toi.compare","compare.attributes","split.files"))]) 
+
 #------------------------------------------------------------------------------------------------------------------------------
-toi.compare <- merge(toi.original,toi.products,by.x = "Article",by.y = "Article")
-toi.compare <- toi.compare[,c("PSA_1.x","PSA_2.x","Article","Web.Description.x","Size.x","Size.y")]
-toi.compare$change <- NA
-
-
-for(i in 1:NROW(toi.compare)) {
-
-      original.size <- toi.compare$Size.x
-      update.size <- toi.compare$Size.y
-      
-            
-      if(is.na(original.size[i]) && !is.na(update.size[i])) {
-            
-            toi.compare$change[i] <- "Infill"
-      }
-      
-      else if (is.na(original.size[i]) && is.na(update.size[i])) {
-      
-            toi.compare$change[i] <- "Keep"
-            
-      }
-      else if (!is.na(original.size[i]) && is.na(update.size[i])) {
-                  
-            toi.compare$change[i] <- "Blank"     
-      }
-            
-            
-      else if (as.character(original.size[i]) == as.character(update.size[i])) {
-                  
-                  toi.compare$change[i] <- "Keep"     
-      }
-            
-      else  {
-                  
-                  toi.compare$change[i] <- "Update"     
-      }     
-            
-            
-      
-}
-
-size.change <- subset(toi.compare,change == "Infill" | toi.compare$change == "Update")
-blanks <- subset(toi.compare,change == "Blank")
-keeps <- subset(toi.compare,change == "Keep")
+#compare.attributes()
 #------------------------------------------------------------------------------------------------------------------------------
-rm(list= ls()[!(ls() %in% c("toi.products","toi.original","size.change","blanks","keeps","toi.compare"))]) 
+#
