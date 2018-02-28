@@ -15,8 +15,8 @@
 
 # Select file
 
-file.to.score <- "WIP/TOI_WIP_V10.csv"
-file.to.compare <- "Original Data/TOI_Original.csv"
+#file.to.cleanse <- "WIP/TOI_WIP_V9.csv"
+file.to.cleanse <- "Original Data/TOI_Original.csv"
 
 # Environment
 
@@ -24,7 +24,7 @@ e <- "Laptop" #'R Drive', 'C Drive'
 
 if(e == 'Laptop') {
       
-      setwd("D:/OneDrive/R Projects/product-attributes")
+      setwd("D:/OneDrive/Work Files/Wilko/Data Cleanse/R Scripts")
       toi.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/TOI/"
 }
 
@@ -42,7 +42,6 @@ if(e == 'R Drive') {
 
 source("regular-expressions.R")
 source("data-checking-functions.R")
-source("split-files.R")
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -57,8 +56,8 @@ csf.toi.type.size <- Size.Required[,1]
 #------------------------------------------------------------------------------------------------------------------------------
 # Read in data set for scoring
 
-toi.products <- read.csv(paste(toi.dir,file.to.score,sep=""))
-toi.original <- read.csv(paste(toi.dir,file.to.compare,sep=""))
+toi.products <- read.csv(paste(toi.dir,file.to.cleanse,sep=""))
+
 
 # Add columns to flag the check status of the product for size
 
@@ -70,8 +69,6 @@ toi.products$Pack.Qty.Format <- NA
 toi.products$Pack.Qty.Format.Score <- 0
 toi.products$Colour.Format <- NA
 toi.products$Colour.Format.Score <- 0
-toi.products$Material.Format <- NA
-toi.products$Material.Format.Score <- 0
 
 # Required Fields
 
@@ -107,7 +104,6 @@ toi.products$Title.Brand.Score <- 0
 toi.products <- dq.score.colour.format(toi.products,check.colour)
 toi.products <- dq.score.pack.qty.format(toi.products,check.pack.qty)
 toi.products <- dq.score.size.format(toi.products,paste(check.size.all))
-toi.products <- dq.score.material.format(toi.products,check.material)
 
 #******************************************************************************************************************************
 #  Data Integrity
@@ -134,9 +130,8 @@ dq.scores <- c("Colour.Format.Score",
                         "Size.Required.Score",
                         "Colour.Required.Score",
                         "Pack.Or.Size.Score",
-                        "Material.Format.Score",
                         "Title.Size.Score",
-                        "Title.Pack.Qty.Score",
+                        "Title.Size.Score",
                         "Title.Brand.Score",
                         "Title.Spelling.Score")
 
@@ -181,21 +176,13 @@ output.cols <- c("PSA_1",
 "Size.Required.Score",
 "Colour.Required.Score",
 "Pack.Or.Size.Score",
-"Material.Format",
-"Material.Format.Score",
 "Title.Spelling.Score",
 "Title.Size.Score",
 "Title.Pack.Qty.Score",
 "Title.Brand.Score"
 )
 
-#------------------------------------------------------------------------------------------------------------------------------
 write.csv(toi.products[,output.cols],paste(toi.dir,"TOI_DQ_Data.csv",sep = ""),row.names = FALSE)
 #------------------------------------------------------------------------------------------------------------------------------
 
-rm(list= ls()[!(ls() %in% c("toi.products","toi.original","toi.compare","compare.attributes","split.files"))]) 
-
-#------------------------------------------------------------------------------------------------------------------------------
-#compare.attributes()
-#------------------------------------------------------------------------------------------------------------------------------
-#
+rm(list= ls()[!(ls() %in% c("toi.products"))]) 
