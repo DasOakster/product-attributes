@@ -10,8 +10,9 @@
  check.hygiene <<- "^X-Small$|^Small$|^Normal$|^Mini$|^Regular$|^Super Medium$|^Super$|^Super Plus$|^Long$|^Extra Long$|^Extra Large$|^Thin$|^Ultra$|^Extra$|^Maxi$"
  check.nappy <<- "^Other$|^Size 1$|^Size 2$|^Size 3$|^Size 4$|^Size 4\\+$|^Size 5$|^Size 5\\+$|^Size 6$|^Size 6\\+$"
  check.bandage <<- "^Size C$|^Size D$|^Size E$|^Size F$|^Size G$"
+ check.shoe.size <<- "^Size 4|^Size 5|^Size 6$|^Size 7$|^Size 8$|^Size 9$|^Size 10$|^Size 11$"
  
- check.size <<- paste(check.fit,"|",check.hygiene,"|",check.nappy,"|",check.bandage,sep = "")
+ check.size <<- paste(check.fit,"|",check.hygiene,"|",check.nappy,"|",check.bandage,"|",check.shoe.size,sep = "")
  
 # Regular Expressions for Single Measures 
  
@@ -23,7 +24,7 @@
 
  # Reguar Expressions for Dimensions of the same units
  
- check.dim <<- "^([0-9]{1,2}(\\.[0-9]{1})? x ){1,2}[0-9]{1,2}(\\.[0-9]{1})?(mm|cm|m|ft|in)$"
+ check.dim <<- "^([0-9]{1,3}(\\.[0-9]{1})? x ){1,3}[0-9]{1,3}(\\.[0-9]{1})?(mm|cm|m|ft|in)$"
 
  # Reguar Expressions for Dimensions of different units
  
@@ -51,10 +52,36 @@
  # Regular Expressions for Material
  
  check.material.cat <- "^Wood$|^Metal$|^Paper$|^Ceramics$|^Fabric$|^Plastic$|^Other$"
- check.material.value <- "^Ash$|^Chipboard$|^Cork$|^Eucalyptus$|^MDF$|^Oak$|^Particleboard$|^Pine$|^Recycled Board$|^Softwood$|^Wicker$|^Willow$|^Aluminium$|^Brass$|^Chrome$|^Copper$|^Gold$|^Iron$|^Silver$|^Stainless Steel$|^Cardboard$|^Greyboard$|^Paper$|^China$|^Glass$|^Porcelain$|^Cotton$|^Elastane$|^Nylon$|^Polycotton$|^Polyester$|^Viscose$|^Acrylic$|^Fiberglass$|^Graphite$|^Latex$|^Melamine$|^PES$|^Polyamide$|^Polycarbonate$|^Polyethylene$|^Polypropylene$|^PVA$|^PVC$|^Vinyl$|^Bassine$|^Canvas$|^Coir$|^Faux Leather$|^Foam$|^Jute$|^Microfibre$|^Rubber$|"      
+ check.material.value <- "^Ash$|^Chipboard$|^Cork$|^Eucalyptus$|^MDF$|^Oak$|^Particleboard$|^Pine$|^Recycled Board$|^Softwood$|^Wicker$|^Willow$|^Aluminium$|^Brass$|^Chrome$|^Copper$|^Gold$|^Iron$|^Silver$|^Stainless Steel$|^Cardboard$|^Greyboard$|^Paper$|^China$|^Glass$|^Porcelain$|^Cotton$|^Elastane$|^Nylon$|^Polycotton$|^Polyester$|^Viscose$|^Acrylic$|^Fiberglass$|^Graphite$|^Latex$|^Melamine$|^PES$|^Polyamide$|^Polycarbonate$|^Polyethylene$|^Polypropylene$|^PVA$|^PVC$|^Vinyl$|^Bassine$|^Canvas$|^Coir$|^Faux Leather$|^Foam$|^Jute$|^Microfibre$|^Rubber$"      
  
- check.material <- paste(check.material.cat,"|",check.material.value) 
+ check.material <- paste(check.material.cat,"|",check.material.value,sep = "") 
  
+# Regular Expressions for Washable
+ 
+ check.washable <- "^Do Not Wash$|^Wash at 30$|^Wash at 40$|^Wash at 40 Synth$|^Wash at 40 Wool$|^Wash at 60$|^Hand Wash Only$|^Dry Clean Only$|^Spot Clean Only$|^Wipe Clean Only$|^Dishwasher proof$"
+ 
+ # Regular Expressions for Age
+ 
+ check.age <- "^From Birth$|^6 Months \\+$|^12 Months \\+$|^18 Months \\+$|^2 Years \\+$|^3 Years \\+$|^4 Years \\+$|^5 Years \\+$|^6 Years \\+$|^7 Years \\+$|^8 Years \\+$|^12 Years \\+$|^Adult Only$"
+
+ # Regular Expressions for Assembly
+ 
+ check.assembly <- "^Yes$|^No$"
+ 
+ # Regular Expressions for Capacity
+ 
+ check.capacity <<- "^[0-9]{1,3}(\\.[0-9]{1,2})?(ml|L)$"
+ 
+ # Regular Expressions for Coverage
+ 
+ check.coverage <<- "^[0-9]{1,3}(\\.[0-9]{1,2})?(m²)$"
+ 
+ # Regular Expressions for Power
+ 
+ check.power.category <<- "^Mains$|^Gas$|^Petrol$|^Battery$|^Solar$|^Electric$|^Manual$"
+ check.power.wattage <<- "^[0-9]{1,4}W$"
+ 
+ check.power <<- paste(check.power.category,"|",check.power.wattage,sep = "")
 #------------------------------------------------------------------------------------------------------------------------
 
 # Data Quality Classification and Scoring
