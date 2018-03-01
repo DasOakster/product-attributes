@@ -251,7 +251,7 @@ dq.score.title.brand <- function(product.data) {
 dq.score.colour.required <- function(product.data) {
             
       for (i in 1:NROW(product.data)) {
-            if (product.data$Type[i] %in% csf.toi.type.colour && is.na(product.data$Colour[i])) {
+            if (product.data$Type[i] %in% csf.type.colour && is.na(product.data$Colour[i])) {
                   
                   product.data$Colour.Required[i] <- "FAIL"
                   product.data$Colour.Required.Score[i] <- dq.rule.1.score
@@ -276,7 +276,7 @@ dq.score.size.required <- function(product.data) {
       
       for(i in 1:NROW(product.data)) {
             
-            if (product.data$Type[i] %in% csf.toi.type.size && is.na(product.data$Size[i])) {
+            if (product.data$Type[i] %in% csf.type.size && is.na(product.data$Size[i])) {
                   
                   product.data$Size.Required[i] <- "FAIL"
                   product.data$Size.Required.Score[i] <- dq.rule.1.score
@@ -292,7 +292,282 @@ dq.score.size.required <- function(product.data) {
       return(product.data)
 }
 
-#---------------------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Completeness - Material
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.material.required <- function(product.data) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (product.data$Type[i] %in% csf.type.material && is.na(product.data$Material[i])) {
+                  
+                  product.data$Material.Required[i] <- "FAIL"
+                  product.data$Material.Required.Score[i] <- dq.rule.1.score
+            }
+            
+            
+            else {
+                  
+                  product.data$Material.Required[i] <- "PASS"
+                  product.data$Material.Required.Score[i] <- 0
+            }
+            
+      }
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Completeness - Pack Qty
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.pack.required <- function(product.data) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (product.data$Type[i] %in% csf.type.pack && is.na(product.data$Pack.Qty[i])) {
+                  
+                  product.data$Pack.Qty.Required[i] <- "FAIL"
+                  product.data$Pack.Qty.Required.Score[i] <- dq.rule.1.score
+            }
+            
+            
+            else {
+                  
+                  product.data$Pack.Qty.Required[i] <- "PASS"
+                  product.data$Pack.Qty.Required.Score[i] <- 0
+            }
+            
+      }
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Completeness - Age
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.age.required <- function(product.data) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (product.data$Type[i] %in% csf.type.age && is.na(product.data$Age[i])) {
+                  
+                  product.data$Age.Required[i] <- "FAIL"
+                  product.data$Age.Required.Score[i] <- dq.rule.1.score
+            }
+            
+            
+            else {
+                  
+                  product.data$Age.Required[i] <- "PASS"
+                  product.data$Age.Required.Score[i] <- 0
+            }
+            
+      }
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Completeness - Power
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.power.required <- function(product.data) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (product.data$Type[i] %in% csf.type.power && is.na(product.data$Power[i])) {
+                  
+                  product.data$Power.Required[i] <- "FAIL"
+                  product.data$Power.Required.Score[i] <- dq.rule.1.score
+            }
+            
+            
+            else {
+                  
+                  product.data$Power.Required[i] <- "PASS"
+                  product.data$Power.Required.Score[i] <- 0
+            }
+            
+      }
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Completeness - Capacity
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.capacity.required <- function(product.data) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (product.data$Type[i] %in% csf.type.capacity && is.na(product.data$Capacity[i])) {
+                  
+                  product.data$Capacity.Required[i] <- "FAIL"
+                  product.data$Capacity.Required.Score[i] <- dq.rule.1.score
+            }
+            
+            
+            else {
+                  
+                  product.data$Capacity.Required[i] <- "PASS"
+                  product.data$Capacity.Required.Score[i] <- 0
+            }
+            
+      }
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Completeness - Coverage
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.coverage.required <- function(product.data) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (product.data$Type[i] %in% csf.type.coverage && is.na(product.data$Coverage[i])) {
+                  
+                  product.data$Coverage.Required[i] <- "FAIL"
+                  product.data$Coverage.Required.Score[i] <- dq.rule.1.score
+            }
+            
+            
+            else {
+                  
+                  product.data$Coverage.Required[i] <- "PASS"
+                  product.data$Coverage.Required.Score[i] <- 0
+            }
+            
+      }
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Completeness - Model Number
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.modelnumber.required <- function(product.data) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (product.data$Type[i] %in% csf.type.modelnumber && is.na(product.data$Model.Number[i])) {
+                  
+                  product.data$Model.Number.Required[i] <- "FAIL"
+                  product.data$Model.Number.Score[i] <- dq.rule.1.score
+            }
+            
+            
+            else {
+                  
+                  product.data$Model.Number.Required[i] <- "PASS"
+                  product.data$Model.Number.Required.Score[i] <- 0
+            }
+            
+      }
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Completeness - Washable
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.washable.required <- function(product.data) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (product.data$Type[i] %in% csf.type.washable && is.na(product.data$Washable[i])) {
+                  
+                  product.data$Washable.Required[i] <- "FAIL"
+                  product.data$Washable.Required.Score[i] <- dq.rule.1.score
+            }
+            
+            
+            else {
+                  
+                  product.data$Washable.Required[i] <- "PASS"
+                  product.data$Washable.Required.Score[i] <- 0
+            }
+            
+      }
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Completeness - Assembly
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.assembly.required <- function(product.data) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (product.data$Type[i] %in% csf.type.assembly && is.na(product.data$Assembly[i])) {
+                  
+                  product.data$Assembly.Required[i] <- "FAIL"
+                  product.data$Assembly.Required.Score[i] <- dq.rule.1.score
+            }
+            
+            
+            else {
+                  
+                  product.data$Assembly.Required[i] <- "PASS"
+                  product.data$Assembly.Required.Score[i] <- 0
+            }
+            
+      }
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Assembly Format 
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.assembly.format <- function(product.data, reg.ex) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (grepl(reg.ex, product.data$Assembly[i], perl = TRUE) == TRUE || is.na(product.data$Assembly[i])) {
+                  
+                  product.data$Assembly.Format[i] <- "PASS"
+                  product.data$Assembly.Format.Score[i] <- 0
+            }
+            
+            
+            else {
+                  
+                  product.data$Assembly.Format[i] <- "FAil"
+                  product.data$Assembly.Format.Score[i] <- dq.rule.2.score
+            }
+            
+            
+            
+      }
+      
+      
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Washable Format 
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.washable.format <- function(product.data, reg.ex) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (grepl(reg.ex, product.data$Washable[i], perl = TRUE) == TRUE || is.na(product.data$Washable[i])) {
+                  
+                  product.data$Washable.Format[i] <- "PASS"
+                  product.data$Washable.Format.Score[i] <- 0
+            }
+            
+            
+            else {
+                  
+                  product.data$Washable.Format[i] <- "FAil"
+                  product.data$Washable.Format.Score[i] <- dq.rule.2.score
+            }
+            
+            
+            
+      }
+      
+      
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Material Format 
+#------------------------------------------------------------------------------------------------------------------------------------------
+
 dq.score.material.format <- function(product.data, reg.ex) {
       
       for (i in 1:NROW(product.data)) {
@@ -305,11 +580,126 @@ dq.score.material.format <- function(product.data, reg.ex) {
             
             else {
                   
-                  product.data$Material.Format[i] <- "FAIL"
+                  product.data$Material.Format[i] <- "FAil"
                   product.data$Material.Format.Score[i] <- dq.rule.2.score
             }
             
+            
+            
       }
+      
+      
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Age Format 
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.age.format <- function(product.data, reg.ex) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (grepl(reg.ex, product.data$Age[i], perl = TRUE) == TRUE || is.na(product.data$Age[i])) {
+                  
+                  product.data$Age.Format[i] <- "PASS"
+                  product.data$Age.Format.Score[i] <- 0
+            }
+            
+            
+            else {
+                  
+                  product.data$Age.Format[i] <- "FAil"
+                  product.data$Age.Format.Score[i] <- dq.rule.2.score
+            }
+            
+            
+            
+      }
+      
+      
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Power Format 
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.power.format <- function(product.data, reg.ex) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (grepl(reg.ex, product.data$Power[i], perl = TRUE) == TRUE || is.na(product.data$Power[i])) {
+                  
+                  product.data$Power.Format[i] <- "PASS"
+                  product.data$Power.Format.Score[i] <- 0
+            }
+            
+            
+            else {
+                  
+                  product.data$Power.Format[i] <- "FAil"
+                  product.data$Power.Format.Score[i] <- dq.rule.2.score
+            }
+            
+            
+            
+      }
+      
+      
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Capacity Format 
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.capacity.format <- function(product.data, reg.ex) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (grepl(reg.ex, product.data$Capacity[i], perl = TRUE) == TRUE || is.na(product.data$Capacity[i])) {
+                  
+                  product.data$Capacity.Format[i] <- "PASS"
+                  product.data$Capacity.Format.Score[i] <- 0
+            }
+            
+            
+            else {
+                  
+                  product.data$Capacity.Format[i] <- "FAil"
+                  product.data$Capacity.Format.Score[i] <- dq.rule.2.score
+            }
+            
+            
+            
+      }
+      
+      
+      return(product.data)
+}
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+# Coverage Format 
+#------------------------------------------------------------------------------------------------------------------------------------------
+
+dq.score.coverage.format <- function(product.data, reg.ex) {
+      
+      for (i in 1:NROW(product.data)) {
+            if (grepl(reg.ex, product.data$Coverage[i], perl = TRUE) == TRUE || is.na(product.data$Coverage[i])) {
+                  
+                  product.data$Coverage.Format[i] <- "PASS"
+                  product.data$Coverage.Format.Score[i] <- 0
+            }
+            
+            
+            else {
+                  
+                  product.data$Coverage.Format[i] <- "FAil"
+                  product.data$Coverage.Format.Score[i] <- dq.rule.2.score
+            }
+            
+            
+            
+      }
+      
       
       return(product.data)
 }

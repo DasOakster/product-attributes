@@ -1,4 +1,4 @@
-# Data Quality processing for Toiletries (TOI)
+# Data Quality processing for Garden (GAR)
 # A FALSE flag means the data field has failed the Data Quality test
 # A TRUE flag means the data field has passed the Data Quality test
 # A NA flag means the data field does not require the Data Quality test
@@ -15,8 +15,8 @@
 
 # Select file
 
-file.to.score <- "WIP/TOI_WIP_V10.csv"
-file.to.compare <- "Original Data/TOI_Original.csv"
+file.to.score <- "WIP/GAR WIP 7.csv"
+file.to.compare <- "Original Data/GAR_Original.csv"
 
 # Environment
 
@@ -25,21 +25,21 @@ e <- "Laptop" #'R Drive', 'C Drive'
 if(e == 'Laptop') {
       
       setwd("D:/OneDrive/R Projects/product-attributes")
-      wip.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/TOI/WIP/"
-      csf.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/TOI/CSF Files/"
-      toi.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/TOI/"
+      wip.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/GAR/WIP/"
+      csf.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/GAR/CSF Files/"
+      gar.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/GAR/"
       }
 
 if(e == 'C Drive') {
       
       setwd("C:/Users/oakleya/Desktop/R Projects/wilko.com/Scripts")
-      wip.dir <- "C:/Users/oakleya/Desktop/Data Cleanse/TOI/"
+      wip.dir <- "C:/Users/oakleya/Desktop/Data Cleanse/GAR/"
 }
 
 if(e == 'R Drive') {
       
       setwd("C:/Users/oakleya/Desktop/R Projects/wilko.com/Scripts")
-      wip.dir <- "R:/Data Quality Reports/Data Cleanse/TOI/"
+      wip.dir <- "R:/Data Quality Reports/Data Cleanse/GAR/"
 }
 
 source("regular-expressions.R")
@@ -48,8 +48,8 @@ source("split-files.R")
 
 # Read in data set for scoring
 
-toi.products <- read.csv(paste(toi.dir,file.to.score,sep=""))
-toi.original <- read.csv(paste(toi.dir,file.to.compare,sep=""))
+gar.products <- read.csv(paste(gar.dir,file.to.score,sep=""))
+gar.original <- read.csv(paste(gar.dir,file.to.compare,sep=""))
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -107,71 +107,71 @@ csf.type.modelnumber <- ModelNumber.Required[,1]
 
 # Format Checking Fields
 
-toi.products$Size.Format <-NA
-toi.products$Size.Format.Score <-0
-toi.products$Pack.Qty.Format <- NA
-toi.products$Pack.Qty.Format.Score <- 0
-toi.products$Colour.Format <- NA
-toi.products$Colour.Format.Score <- 0
-toi.products$Material.Format <- NA
-toi.products$Material.Format.Score <- 0
-toi.products$Capacity.Format <- NA
-toi.products$Capacity.Format.Score <- 0
-toi.products$Coverage.Format <- NA
-toi.products$Coverage.Format.Score <- 0
-toi.products$Age.Format <- NA
-toi.products$Age.Format.Score <- 0
-toi.products$Assembly.Format <- NA
-toi.products$Assembly.Format.Score <- 0
-toi.products$Model.Number.Format <- NA
-toi.products$Model.Number.Format.Score <- 0
-toi.products$Power.Format <- NA
-toi.products$Power.Format.Score <- 0
-toi.products$Washable.Format <- NA
-toi.products$Washable.Format.Score <- 0
+gar.products$Size.Format <-NA
+gar.products$Size.Format.Score <-0
+gar.products$Pack.Qty.Format <- NA
+gar.products$Pack.Qty.Format.Score <- 0
+gar.products$Colour.Format <- NA
+gar.products$Colour.Format.Score <- 0
+gar.products$Material.Format <- NA
+gar.products$Material.Format.Score <- 0
+gar.products$Capacity.Format <- NA
+gar.products$Capacity.Format.Score <- 0
+gar.products$Coverage.Format <- NA
+gar.products$Coverage.Format.Score <- 0
+gar.products$Age.Format <- NA
+gar.products$Age.Format.Score <- 0
+gar.products$Assembly.Format <- NA
+gar.products$Assembly.Format.Score <- 0
+gar.products$Model.Number.Format <- NA
+gar.products$Model.Number.Format.Score <- 0
+gar.products$Power.Format <- NA
+gar.products$Power.Format.Score <- 0
+gar.products$Washable.Format <- NA
+gar.products$Washable.Format.Score <- 0
 
 # Required Fields
 
-toi.products$Colour.Required <- NA
-toi.products$Colour.Required.Score <- 0
-toi.products$Size.Required <- NA
-toi.products$Size.Required.Score <- 0
-toi.products$Material.Required <- NA
-toi.products$Material.Required.Score <- 0
-toi.products$Power.Required <- NA
-toi.products$Power.Required.Score <- 0
-toi.products$Coverage.Required <- NA
-toi.products$Coverage.Required.Score <- 0
-toi.products$Capacity.Required <- NA
-toi.products$Capacity.Required.Score <- 0
-toi.products$Age.Required <- NA
-toi.products$Age.Required.Score <- 0
-toi.products$Assembly.Required <- NA
-toi.products$Assembly.Required.Score <- 0
-toi.products$Washable.Required <- NA
-toi.products$Washable.Required.Score <- 0
-toi.products$Model.Number.Required <- NA
-toi.products$Model.Number.Required.Score <- 0
-toi.products$Pack.Qty.Required <- NA
-toi.products$Pack.Qty.Required.Score <- 0
+gar.products$Colour.Required <- NA
+gar.products$Colour.Required.Score <- 0
+gar.products$Size.Required <- NA
+gar.products$Size.Required.Score <- 0
+gar.products$Material.Required <- NA
+gar.products$Material.Required.Score <- 0
+gar.products$Power.Required <- NA
+gar.products$Power.Required.Score <- 0
+gar.products$Coverage.Required <- NA
+gar.products$Coverage.Required.Score <- 0
+gar.products$Capacity.Required <- NA
+gar.products$Capacity.Required.Score <- 0
+gar.products$Age.Required <- NA
+gar.products$Age.Required.Score <- 0
+gar.products$Assembly.Required <- NA
+gar.products$Assembly.Required.Score <- 0
+gar.products$Washable.Required <- NA
+gar.products$Washable.Required.Score <- 0
+gar.products$Model.Number.Required <- NA
+gar.products$Model.Number.Required.Score <- 0
+gar.products$Pack.Qty.Required <- NA
+gar.products$Pack.Qty.Required.Score <- 0
 
 
 # Data Integrity Fields
 
-toi.products$Title.Spelling <- NA
-toi.products$Title.Spelling.Score <- 0
-toi.products$Pack.Or.Size <-NA
-toi.products$Pack.Or.Size.Score <- 0
+gar.products$Title.Spelling <- NA
+gar.products$Title.Spelling.Score <- 0
+gar.products$Pack.Or.Size <-NA
+gar.products$Pack.Or.Size.Score <- 0
 
 # Title and Attribute Consistency Fields
 
-toi.products$Title.Size <- NA
-toi.products$Title.Size.Score <- 0
-toi.products$Title.Pack.Qty <- NA
-toi.products$Title.Pack.Qty.Score <- 0
+gar.products$Title.Size <- NA
+gar.products$Title.Size.Score <- 0
+gar.products$Title.Pack.Qty <- NA
+gar.products$Title.Pack.Qty.Score <- 0
 
-toi.products$Title.Brand <- NA
-toi.products$Title.Brand.Score <- 0
+gar.products$Title.Brand <- NA
+gar.products$Title.Brand.Score <- 0
 #------------------------------------------------------------------------------------------------------------------------------
 
 #******************************************************************************************************************************
@@ -180,42 +180,42 @@ toi.products$Title.Brand.Score <- 0
 
 #  Attributes must conform to patterns defined by regular expressions or reference data
 
-toi.products <- dq.score.colour.format(toi.products,check.colour)
-toi.products <- dq.score.pack.qty.format(toi.products,check.pack.qty)
-toi.products <- dq.score.size.format(toi.products,paste(check.size.all))
-toi.products <- dq.score.assembly.format(toi.products,check.assembly)
-toi.products <- dq.score.age.format(toi.products,check.age)
-toi.products <- dq.score.capacity.format(toi.products,check.capacity)
-toi.products <- dq.score.coverage.format(toi.products,check.coverage)
-toi.products <- dq.score.power.format(toi.products,check.power)
-toi.products <- dq.score.washable.format(toi.products,check.washable)
-toi.products <- dq.score.material.format(toi.products,check.material)
+gar.products <- dq.score.colour.format(gar.products,check.colour)
+gar.products <- dq.score.pack.qty.format(gar.products,check.pack.qty)
+gar.products <- dq.score.size.format(gar.products,paste(check.size.all))
+gar.products <- dq.score.assembly.format(gar.products,check.assembly)
+gar.products <- dq.score.age.format(gar.products,check.age)
+gar.products <- dq.score.capacity.format(gar.products,check.capacity)
+gar.products <- dq.score.coverage.format(gar.products,check.coverage)
+gar.products <- dq.score.power.format(gar.products,check.power)
+gar.products <- dq.score.washable.format(gar.products,check.washable)
+gar.products <- dq.score.material.format(gar.products,check.material)
 
 #******************************************************************************************************************************
 #  Data Integrity
 #******************************************************************************************************************************
 
-toi.products <- dq.score.pack.or.size(toi.products)
-toi.products <- dq.score.title.brand(toi.products)
-toi.products <- dq.score.title.pack.qty(toi.products)
-toi.products <- dq.score.title.size(toi.products)
-toi.products <- dq.score.web.description(toi.products)
+gar.products <- dq.score.pack.or.size(gar.products)
+gar.products <- dq.score.title.brand(gar.products)
+gar.products <- dq.score.title.pack.qty(gar.products)
+gar.products <- dq.score.title.size(gar.products)
+gar.products <- dq.score.web.description(gar.products)
 
 #******************************************************************************************************************************
 #  Data Completeness for Critical Attributes
 #******************************************************************************************************************************
 
-toi.products <- dq.score.colour.required(toi.products)
-toi.products <- dq.score.size.required(toi.products)
-toi.products <- dq.score.pack.required(toi.products)
-toi.products <- dq.score.assembly.required(toi.products)
-toi.products <- dq.score.age.required(toi.products)
-toi.products <- dq.score.modelnumber.required(toi.products)
-toi.products <- dq.score.material.required(toi.products)
-toi.products <- dq.score.coverage.required(toi.products)
-toi.products <- dq.score.capacity.required(toi.products)
-toi.products <- dq.score.power.required(toi.products)
-toi.products <- dq.score.washable.required(toi.products)
+gar.products <- dq.score.colour.required(gar.products)
+gar.products <- dq.score.size.required(gar.products)
+gar.products <- dq.score.pack.required(gar.products)
+gar.products <- dq.score.assembly.required(gar.products)
+gar.products <- dq.score.age.required(gar.products)
+gar.products <- dq.score.modelnumber.required(gar.products)
+gar.products <- dq.score.material.required(gar.products)
+gar.products <- dq.score.coverage.required(gar.products)
+gar.products <- dq.score.capacity.required(gar.products)
+gar.products <- dq.score.power.required(gar.products)
+gar.products <- dq.score.washable.required(gar.products)
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -231,23 +231,23 @@ dq.scores <- c("Colour.Format.Score",
                         "Title.Brand.Score",
                         "Title.Spelling.Score")
 
-toi.products$Data.Quality.Score <- 100 + rowSums(toi.products[,dq.scores]) 
-toi.products$Data.Quality.Score[toi.products$Data.Quality.Score < 0] <- 0
+gar.products$Data.Quality.Score <- 100 + rowSums(gar.products[,dq.scores]) 
+gar.products$Data.Quality.Score[gar.products$Data.Quality.Score < 0] <- 0
 
 #------------------------------------------------------------------------------------------------------------------------------
 
 # Create output files:  Any data failing the test and the full WIP file with flags
 
-df.columns <- colnames(toi.products)
+df.columns <- colnames(gar.products)
 output.cols <- c(df.columns[grepl("Score",df.columns)==FALSE])
-dq.data.file <- toi.products[,output.cols]
+dq.data.file <- gar.products[,output.cols]
 #dq.data.file <- dq.data.file[,c(4,1,2,3,5,6,7,8,9,10,11,13,14,15,16,18,19,24,28,26,34,20,31,21,32,22,29,23,30,25,33,27,35,17,12)]
 
 #------------------------------------------------------------------------------------------------------------------------------
-write.csv(dq.data.file,paste(wip.dir,"TOI_DQ_Data.csv",sep = ""),row.names = FALSE)
+write.csv(dq.data.file,paste(wip.dir,"GAR_DQ_Data.csv",sep = ""),row.names = FALSE)
 #------------------------------------------------------------------------------------------------------------------------------
 
-rm(list= ls()[!(ls() %in% c("toi.products","toi.original","toi.compare","compare.attributes","split.files"))]) 
+rm(list= ls()[!(ls() %in% c("gar.products","gar.original","gar.compare","compare.attributes","split.files"))]) 
 #rm(list=ls())
 
 #------------------------------------------------------------------------------------------------------------------------------
