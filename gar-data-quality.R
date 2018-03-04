@@ -1,26 +1,27 @@
 # Data Quality processing for Garden (GAR)
-# A FALSE flag means the data field has failed the Data Quality test
-# A TRUE flag means the data field has passed the Data Quality test
-# A NA flag means the data field does not require the Data Quality test
+# A FAIL flag means the data field has failed the Data Quality test
+# A PASS flag means the data field has passed the Data Quality test
 
-# The script conducts 3 types of DQ test
-# 1. Conformity - does the data conform to a predefined pattern or reference data set
-# 2. Whole data Set rules - e.g. Products must have either a Pack Qty or a Size
-# 3. Critical Success Factor test - CSF - these are web product types where a key attribute must be fully populated with no NAs
-
+# The script conducts 4 types of DQ test
+# 1. Conformity tests - does the data conform to a predefined pattern or reference data set
+# 2. Data integrity rules - e.g. Products must have either a Pack Qty or a Size
+# 3. Critical Success Factor tests - CSF - these are web product types where a key attribute must be fully populated with no NAs
+# 4. Checks on the consistency of the web description and attribute fields
 
 # The source data is imported and flags are created for the different tests
+
+#----------------------------------------------------------------------------------------------------------------------------------------
 
 # Set up working directory, source directories and source scripts
 
 # Select file
 
-file.to.score <- "WIP/GAR WIP 7.csv"
+file.to.score <- "WIP/GAR WIP.csv"
 file.to.compare <- "Original Data/GAR_Original.csv"
 
 # Environment
 
-e <- "Laptop" #'R Drive', 'C Drive'
+e <- "Laptop" #'R Drive' 'C Drive'
 
 if(e == 'Laptop') {
       
@@ -46,67 +47,66 @@ source("regular-expressions.R")
 source("data-checking-functions.R")
 source("split-files.R")
 
+#------------------------------------------------------------------------------------------------------------------------------
 # Read in data set for scoring
+#------------------------------------------------------------------------------------------------------------------------------
 
 gar.products <- read.csv(paste(gar.dir,file.to.score,sep=""))
 gar.original <- read.csv(paste(gar.dir,file.to.compare,sep=""))
 
 #------------------------------------------------------------------------------------------------------------------------------
-
-# Web Product Types listed require 100% completion for the attribute
+# Web Product Types listed in these files require 100% completion for the attribute
+#------------------------------------------------------------------------------------------------------------------------------
 
 csf.colour <- paste(csf.dir,"CSF_Colour.csv",sep = "")
-csf.size <- paste(csf.dir,"CSF_Size.csv",sep = "")
-csf.material <- paste(csf.dir,"CSF_Material.csv",sep = "")
-csf.power <- paste(csf.dir,"CSF_Power.csv",sep = "")
-csf.packqty <- paste(csf.dir,"CSF_PackQty.csv",sep = "")
-csf.modelnumber <- paste(csf.dir,"CSF_ModelNumber.csv",sep = "")
-csf.age <- paste(csf.dir,"CSF_Age.csv",sep = "")
-csf.assembly <- paste(csf.dir,"CSF_Assembly.csv",sep = "")
-csf.capacity <- paste(csf.dir,"CSF_Capacity.csv",sep = "")
-csf.coverage <- paste(csf.dir,"CSF_Coverage.csv",sep = "")
-csf.washable <- paste(csf.dir,"CSF_Washable.csv",sep = "")
-
-
 Colour.Required <- read.csv(csf.colour)
 csf.type.colour <- Colour.Required[,1]
 
+csf.size <- paste(csf.dir,"CSF_Size.csv",sep = "")
 Size.Required <- read.csv(csf.size)
 csf.type.size <- Size.Required[,1]
 
+csf.packqty <- paste(csf.dir,"CSF_PackQty.csv",sep = "")
 PackQty.Required <- read.csv(csf.packqty)
 csf.type.pack <- PackQty.Required[,1]
 
+csf.age <- paste(csf.dir,"CSF_Age.csv",sep = "")
 Age.Required <- read.csv(csf.age)
 csf.type.age <- Age.Required[,1]
 
+csf.assembly <- paste(csf.dir,"CSF_Assembly.csv",sep = "")
 Assembly.Required <- read.csv(csf.assembly)
 csf.type.assembly <- Assembly.Required[,1]
 
+csf.material <- paste(csf.dir,"CSF_Material.csv",sep = "")
 Material.Required <- read.csv(csf.material)
 csf.type.material <- Material.Required[,1]
 
+csf.washable <- paste(csf.dir,"CSF_Washable.csv",sep = "")
 Washable.Required <- read.csv(csf.washable)
 csf.type.washable <- Washable.Required[,1]
 
+csf.coverage <- paste(csf.dir,"CSF_Coverage.csv",sep = "")
 Coverage.Required <- read.csv(csf.coverage)
 csf.type.coverage <- Coverage.Required[,1]
 
+csf.capacity <- paste(csf.dir,"CSF_Capacity.csv",sep = "")
 Capacity.Required <- read.csv(csf.capacity)
 csf.type.capacity <- Capacity.Required[,1]
 
+csf.power <- paste(csf.dir,"CSF_Power.csv",sep = "")
 Power.Required <- read.csv(csf.power)
 csf.type.power <- Power.Required[,1]
 
+csf.modelnumber <- paste(csf.dir,"CSF_ModelNumber.csv",sep = "")
 ModelNumber.Required <- read.csv(csf.modelnumber)
 csf.type.modelnumber <- ModelNumber.Required[,1]
+
+#------------------------------------------------------------------------------------------------------------------------------
+# Add columns to flag the check status of the product for size
 #------------------------------------------------------------------------------------------------------------------------------
 
-
-# Add columns to flag the check status of the product for size
-
-# Format Checking Fields
-
+# Format Check Fields
 gar.products$Size.Format <-NA
 gar.products$Size.Format.Score <-0
 gar.products$Pack.Qty.Format <- NA
@@ -130,8 +130,7 @@ gar.products$Power.Format.Score <- 0
 gar.products$Washable.Format <- NA
 gar.products$Washable.Format.Score <- 0
 
-# Required Fields
-
+# Required Check Fields
 gar.products$Colour.Required <- NA
 gar.products$Colour.Required.Score <- 0
 gar.products$Size.Required <- NA
@@ -155,31 +154,25 @@ gar.products$Model.Number.Required.Score <- 0
 gar.products$Pack.Qty.Required <- NA
 gar.products$Pack.Qty.Required.Score <- 0
 
-
-# Data Integrity Fields
-
-gar.products$Title.Spelling <- NA
-gar.products$Title.Spelling.Score <- 0
+# Data Integrity Check Fields
 gar.products$Pack.Or.Size <-NA
 gar.products$Pack.Or.Size.Score <- 0
 
-# Title and Attribute Consistency Fields
-
+# Title and Attribute Consistency Check Fields
+gar.products$Title.Spelling <- NA
+gar.products$Title.Spelling.Score <- 0
 gar.products$Title.Size <- NA
 gar.products$Title.Size.Score <- 0
 gar.products$Title.Pack.Qty <- NA
 gar.products$Title.Pack.Qty.Score <- 0
-
 gar.products$Title.Brand <- NA
 gar.products$Title.Brand.Score <- 0
-#------------------------------------------------------------------------------------------------------------------------------
 
 #******************************************************************************************************************************
 # Product Attribute Formats
 #******************************************************************************************************************************
 
 #  Attributes must conform to patterns defined by regular expressions or reference data
-
 gar.products <- dq.score.colour.format(gar.products,check.colour)
 gar.products <- dq.score.pack.qty.format(gar.products,check.pack.qty)
 gar.products <- dq.score.size.format(gar.products,paste(check.size.all))
