@@ -54,6 +54,7 @@ compare.attributes <- function() {
       
       
       split.files(toi.attribute.compare,toi.products,attribute)
+      brand.files()
             
       } # End main loop
 
@@ -72,8 +73,8 @@ split.files <- function(df1, df2, colatr) {
             check.file <- subset(df2,Title.Spelling == "CHECK" | Title.Brand == "CHECK" | Title.Size == "CHECK" | Title.Pack.Qty == "CHECK")
             check.file <- subset(check.file[,c("PSA_1","PSA_2","Article","Web.Description","Brand","Size","Pack.Qty","Title.Spelling","Title.Brand","Title.Size","Title.Pack.Qty")])
             
-            psa2.dir <- paste("D:/OneDrive/R Projects/product-attributes/TOI/",x, sep = "")
-            setwd("D:/OneDrive/R Projects/product-attributes/TOI/")
+            psa2.dir <- paste("D:/OneDrive/Work Files/Wilko/Data Cleanse/TOI/PSA2/",x, sep = "")
+            #setwd("D:/OneDrive/R Projects/product-attributes/TOI/")
             
             if(!dir.exists(psa2.dir)) {
             
@@ -92,4 +93,18 @@ split.files <- function(df1, df2, colatr) {
       
 }
 
+brand.files <- function() {
+      psa2 <- unique(toi.products$PSA_2)
+      psa2.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/TOI/PSA2/"
+      
+      for(i in 1:NROW(psa2)) {
+            
+            brand.issue <- subset(toi.products,(PSA_2 == psa2[i] & Title.Brand == "FAIL"))
+            setwd(paste(psa2.dir,psa2[i],sep = ""))
+            num.cases <- NROW(brand.issue)
+            brand.issue <- brand.issue[,c("PSA_1","PSA_2","Article","Web.Description","Brand")]
+            write.csv(brand.issue,paste(psa2[i],"_Check_Brand_","(",num.cases,").csv",sep = ""),row.names = FALSE)
+            
+      }
+}
 

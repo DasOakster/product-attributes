@@ -28,7 +28,7 @@
 
  # Reguar Expressions for Dimensions of different units
  
- check.dimx <<- "^[0-9]{1,2}(\\.[0-9]{1})?(mm|cm|m) x [0-9]{1,2}(\\.[0-9]{1})?(mm|cm|m|ft|in)$"
+ check.dimx <<- "^[0-9]{1,2}(\\.[0-9]{1,2})?(mm|cm|m) x [0-9]{1,2}(\\.[0-9]{1})?(mm|cm|m|ft|in)$"
  
  # Regular Expressions for Ranges of same units
  
