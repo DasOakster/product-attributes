@@ -15,7 +15,7 @@
 
 # Select file
 
-file.to.score <- "WIP/TOI_WIP_V10.csv"
+file.to.score <- "WIP/TOI_WIP.csv"
 file.to.compare <- "Original Data/TOI_Original.csv"
 
 # Environment
@@ -247,10 +247,10 @@ dq.data.file <- toi.products[,output.cols]
 write.csv(dq.data.file,paste(wip.dir,"TOI_DQ_Data.csv",sep = ""),row.names = FALSE)
 #------------------------------------------------------------------------------------------------------------------------------
 
-rm(list= ls()[!(ls() %in% c("toi.products","toi.original","toi.compare","compare.attributes","split.files"))]) 
+rm(list= ls()[!(ls() %in% c("toi.products","toi.original","toi.compare","compare.attributes","split.files","brand.files"))]) 
 #rm(list=ls())
 
 #------------------------------------------------------------------------------------------------------------------------------
-#compare.attributes()
+compare.attributes()
 #------------------------------------------------------------------------------------------------------------------------------
 #
