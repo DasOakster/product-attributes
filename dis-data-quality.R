@@ -1,4 +1,4 @@
-# Data Quality processing for Garden (GAR)
+# Data Quality processing for Disposables (DIS)
 # A FAIL flag means the data field has failed the Data Quality test
 # A PASS flag means the data field has passed the Data Quality test
 
@@ -16,8 +16,8 @@
 
 # Select file
 
-file.to.score <- "WIP/GAR WIP.csv"
-file.to.compare <- "Original Data/GAR_Original.csv"
+file.to.score <- "WIP/DIS_WIP.csv"
+file.to.compare <- "Original Data/DIS_Original.csv"
 
 # Environment
 
@@ -26,21 +26,21 @@ e <- "Laptop" #'R Drive' 'C Drive'
 if(e == 'Laptop') {
       
       setwd("D:/OneDrive/R Projects/product-attributes")
-      wip.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/GAR/WIP/"
-      csf.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/GAR/CSF Files/"
-      gar.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/GAR/"
+      wip.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/DIS/WIP/"
+      csf.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/DIS/CSF Files/"
+      dis.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/DIS/"
       }
 
 if(e == 'C Drive') {
       
       setwd("C:/Users/oakleya/Desktop/R Projects/wilko.com/Scripts")
-      wip.dir <- "C:/Users/oakleya/Desktop/Data Cleanse/GAR/"
+      wip.dir <- "C:/Users/oakleya/Desktop/Data Cleanse/DIS/"
 }
 
 if(e == 'R Drive') {
       
       setwd("C:/Users/oakleya/Desktop/R Projects/wilko.com/Scripts")
-      wip.dir <- "R:/Data Quality Reports/Data Cleanse/GAR/"
+      wip.dir <- "R:/Data Quality Reports/Data Cleanse/DIS/"
 }
 
 source("regular-expressions.R")
@@ -51,10 +51,12 @@ source("split-files.R")
 # Read in data set for scoring
 #------------------------------------------------------------------------------------------------------------------------------
 
-psa1.products <- read.csv(paste(gar.dir,file.to.score,sep=""))
-psa1.original <- read.csv(paste(gar.dir,file.to.compare,sep=""))
+psa1.products <- read.csv(paste(dis.dir,file.to.score,sep=""))
+psa1.original <- read.csv(paste(dis.dir,file.to.compare,sep=""))
 
-# Web Product Types listed require 100% completion for the attribute
+#------------------------------------------------------------------------------------------------------------------------------
+# Web Product Types listed in these files require 100% completion for the attribute
+#------------------------------------------------------------------------------------------------------------------------------
 
 colour.required <- read.csv(paste(csf.dir,"CSF_Colour.csv",sep = ""))[,1]
 size.required <- read.csv(paste(csf.dir,"CSF_Size.csv",sep = ""))[,1]
@@ -67,6 +69,7 @@ coverage.required <- read.csv(paste(csf.dir,"CSF_Coverage.csv",sep = ""))[,1]
 capacity.required <- read.csv(paste(csf.dir,"CSF_Capacity.csv",sep = ""))[,1]
 power.required <- read.csv(paste(csf.dir,"CSF_Power.csv",sep = ""))[,1]
 model.number.required <- read.csv(paste(csf.dir,"CSF_ModelNumber.csv",sep = ""))[,1]
+
 
 #------------------------------------------------------------------------------------------------------------------------------
 # Add columns to flag the check status of the product for size
@@ -137,7 +140,7 @@ psa1.products$Title.Brand.Score <- 0
 #******************************************************************************************************************************
 # Product Attribute Formats
 #******************************************************************************************************************************
-check.coverage <<- "[0-9]{1,3}(m²)"
+
 #  Attributes must conform to patterns defined by regular expressions or reference data
 psa1.products <- dq.score.colour.format(psa1.products,check.colour)
 psa1.products <- dq.score.pack.qty.format(psa1.products,check.pack.qty)
@@ -200,16 +203,16 @@ psa1.products$Data.Quality.Score[psa1.products$Data.Quality.Score < 0] <- 0
 df.columns <- colnames(psa1.products)
 output.cols <- c(df.columns[grepl("Score",df.columns)==FALSE])
 dq.data.file <- psa1.products[,output.cols]
-dq.score.file <- psa1.products[,c(1:4,6,10,72)]
-write.csv(dq.score.file,paste(wip.dir,"GAR_DQ_Score.csv",sep = ""),row.names = FALSE)
+#dq.data.file <- dq.data.file[,c(4,1,2,3,5,6,7,8,9,10,11,13,14,15,16,18,19,24,28,26,34,20,31,21,32,22,29,23,30,25,33,27,35,17,12)]
+
 #------------------------------------------------------------------------------------------------------------------------------
-write.csv(dq.data.file,paste(wip.dir,"GAR_DQ_Data.csv",sep = ""),row.names = FALSE)
+write.csv(dq.data.file,paste(wip.dir,"DIS_DQ_Data.csv",sep = ""),row.names = FALSE)
 #------------------------------------------------------------------------------------------------------------------------------
 
 rm(list= ls()[!(ls() %in% c("psa1.products","psa1.original","gar.compare","compare.attributes","split.files","brand.files"))]) 
 #rm(list=ls())
 
 #------------------------------------------------------------------------------------------------------------------------------
-compare.attributes(psa1.original,psa1.products,"GAR")
+compare.attributes(psa1.original,psa1.products,"DIS")
 #------------------------------------------------------------------------------------------------------------------------------
 #
