@@ -150,7 +150,11 @@ dq.score.title.pack.qty <- function(product.data) {
             
             if(grepl("[0-9]{1,3}pk$",product.data$Web.Description[i],perl = TRUE) == TRUE) {
                   
-                  if(grepl("[0-9]{1,3}pk$",product.data$Pack.Qty[i],perl = TRUE) == TRUE) {
+                  
+                  title.pk <- sub(".*?([0-9]+pk)$", "\\1", product.data$Web.Description[i],perl=TRUE) #extract the pack quantity
+                  title.pk <- sub(".*?([0-9]+).*", "\\1", title.pk,perl=TRUE) #extract the number
+                  
+                  if(grepl(title.pk,product.data$Pack.Qty[i],perl = TRUE) == TRUE) {
                         product.data$Title.Pack.Qty[i] <- "PASS"
                   }
                   
@@ -171,7 +175,7 @@ dq.score.title.pack.qty <- function(product.data) {
 
 dq.score.title.size <- function(product.data) {
 
-size.pattern <- "[0-9]{1,4}(\\.[0-9]{1,2})?(g|ml)$"
+size.pattern <- "[0-9]{1,4}(\\.[0-9]{1,2})?(g|ml|kg|L|ft)$"
       
 for(i in 1:NROW(product.data)) {
       
@@ -251,7 +255,7 @@ dq.score.title.brand <- function(product.data) {
 dq.score.colour.required <- function(product.data) {
             
       for (i in 1:NROW(product.data)) {
-            if (product.data$Type[i] %in% csf.type.colour && is.na(product.data$Colour[i])) {
+            if (product.data$Type[i] %in% colour.required && is.na(product.data$Colour[i])) {
                   
                   product.data$Colour.Required[i] <- "FAIL"
                   product.data$Colour.Required.Score[i] <- dq.rule.1.score
@@ -276,7 +280,7 @@ dq.score.size.required <- function(product.data) {
       
       for(i in 1:NROW(product.data)) {
             
-            if (product.data$Type[i] %in% csf.type.size && is.na(product.data$Size[i])) {
+            if (product.data$Type[i] %in% size.required && is.na(product.data$Size[i])) {
                   
                   product.data$Size.Required[i] <- "FAIL"
                   product.data$Size.Required.Score[i] <- dq.rule.1.score
@@ -299,7 +303,7 @@ dq.score.size.required <- function(product.data) {
 dq.score.material.required <- function(product.data) {
       
       for (i in 1:NROW(product.data)) {
-            if (product.data$Type[i] %in% csf.type.material && is.na(product.data$Material[i])) {
+            if (product.data$Type[i] %in% material.required && is.na(product.data$Material[i])) {
                   
                   product.data$Material.Required[i] <- "FAIL"
                   product.data$Material.Required.Score[i] <- dq.rule.1.score
@@ -323,7 +327,7 @@ dq.score.material.required <- function(product.data) {
 dq.score.pack.required <- function(product.data) {
       
       for (i in 1:NROW(product.data)) {
-            if (product.data$Type[i] %in% csf.type.pack && is.na(product.data$Pack.Qty[i])) {
+            if (product.data$Type[i] %in% pack.qty.required && is.na(product.data$Pack.Qty[i])) {
                   
                   product.data$Pack.Qty.Required[i] <- "FAIL"
                   product.data$Pack.Qty.Required.Score[i] <- dq.rule.1.score
@@ -347,7 +351,7 @@ dq.score.pack.required <- function(product.data) {
 dq.score.age.required <- function(product.data) {
       
       for (i in 1:NROW(product.data)) {
-            if (product.data$Type[i] %in% csf.type.age && is.na(product.data$Age[i])) {
+            if (product.data$Type[i] %in% age.required && is.na(product.data$Age[i])) {
                   
                   product.data$Age.Required[i] <- "FAIL"
                   product.data$Age.Required.Score[i] <- dq.rule.1.score
@@ -371,7 +375,7 @@ dq.score.age.required <- function(product.data) {
 dq.score.power.required <- function(product.data) {
       
       for (i in 1:NROW(product.data)) {
-            if (product.data$Type[i] %in% csf.type.power && is.na(product.data$Power[i])) {
+            if (product.data$Type[i] %in% power.required && is.na(product.data$Power[i])) {
                   
                   product.data$Power.Required[i] <- "FAIL"
                   product.data$Power.Required.Score[i] <- dq.rule.1.score
@@ -395,7 +399,7 @@ dq.score.power.required <- function(product.data) {
 dq.score.capacity.required <- function(product.data) {
       
       for (i in 1:NROW(product.data)) {
-            if (product.data$Type[i] %in% csf.type.capacity && is.na(product.data$Capacity[i])) {
+            if (product.data$Type[i] %in% capacity.required && is.na(product.data$Capacity[i])) {
                   
                   product.data$Capacity.Required[i] <- "FAIL"
                   product.data$Capacity.Required.Score[i] <- dq.rule.1.score
@@ -419,7 +423,7 @@ dq.score.capacity.required <- function(product.data) {
 dq.score.coverage.required <- function(product.data) {
       
       for (i in 1:NROW(product.data)) {
-            if (product.data$Type[i] %in% csf.type.coverage && is.na(product.data$Coverage[i])) {
+            if (product.data$Type[i] %in% coverage.required && is.na(product.data$Coverage[i])) {
                   
                   product.data$Coverage.Required[i] <- "FAIL"
                   product.data$Coverage.Required.Score[i] <- dq.rule.1.score
@@ -443,7 +447,7 @@ dq.score.coverage.required <- function(product.data) {
 dq.score.modelnumber.required <- function(product.data) {
       
       for (i in 1:NROW(product.data)) {
-            if (product.data$Type[i] %in% csf.type.modelnumber && is.na(product.data$Model.Number[i])) {
+            if (product.data$Type[i] %in% model.number.required && is.na(product.data$Model.Number[i])) {
                   
                   product.data$Model.Number.Required[i] <- "FAIL"
                   product.data$Model.Number.Score[i] <- dq.rule.1.score
@@ -467,7 +471,7 @@ dq.score.modelnumber.required <- function(product.data) {
 dq.score.washable.required <- function(product.data) {
       
       for (i in 1:NROW(product.data)) {
-            if (product.data$Type[i] %in% csf.type.washable && is.na(product.data$Washable[i])) {
+            if (product.data$Type[i] %in% washable.required && is.na(product.data$Washable[i])) {
                   
                   product.data$Washable.Required[i] <- "FAIL"
                   product.data$Washable.Required.Score[i] <- dq.rule.1.score
@@ -491,7 +495,7 @@ dq.score.washable.required <- function(product.data) {
 dq.score.assembly.required <- function(product.data) {
       
       for (i in 1:NROW(product.data)) {
-            if (product.data$Type[i] %in% csf.type.assembly && is.na(product.data$Assembly[i])) {
+            if (product.data$Type[i] %in% assembly.required && is.na(product.data$Assembly[i])) {
                   
                   product.data$Assembly.Required[i] <- "FAIL"
                   product.data$Assembly.Required.Score[i] <- dq.rule.1.score
