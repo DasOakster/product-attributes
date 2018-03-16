@@ -42,10 +42,10 @@ if(e == 'R Drive') {
       wip.dir <- "R:/Data Quality Reports/Data Cleanse/KIT/"
 }
 
-source("regular-expressions.R")
-source("data-checking-functions.R")
-source("split-files.R")
-source("create-summary-columns.R")
+source("D:/OneDrive/R Projects/product-attributes/DQ Functions/regular-expressions.R")
+source("D:/OneDrive/R Projects/product-attributes/DQ Functions/data-checking-functions.R")
+source("D:/OneDrive/R Projects/product-attributes/DQ Functions/split-files.R")
+source("D:/OneDrive/R Projects/product-attributes/DQ Functions/create-summary-columns.R")
 
 # Read in data set for scoring
 
