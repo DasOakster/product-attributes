@@ -10,7 +10,7 @@ size.cols <- c(df.columns[(grepl("Score",df.columns)==TRUE & grepl("Size",df.col
 
 for(i in 1:NROW(product.data)){
 
-      if(rowSums(product.data[i,size.cols]) < 0) {
+      if(rowSums(product.data[i,size.cols]) < dq.score.minor.fail) {
             
             product.data$Size.DQ[i] = "FAIL"
       }   
@@ -21,8 +21,16 @@ for(i in 1:NROW(product.data)){
            
 }
 
-      return(product.data)
+      
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Size.DQ")
+      s <- subset(product.data,select = report.cols)
+      s$Attribute <- "Size"
+      colnames(s)[colnames(s)=="Size.DQ"] <- "Status"
 
+      s <<- s
+      
+      return(product.data)
+      
 }
 #----------------------------------------------------------------------------------------------------------------------
 score.pack.qty <- function (product.data) {
@@ -35,7 +43,7 @@ score.pack.qty <- function (product.data) {
       
       for(i in 1:NROW(product.data)){
             
-            if(rowSums(product.data[i,pack.cols]) < 0) {
+            if(rowSums(product.data[i,pack.cols]) < dq.score.minor.fail) {
                   
                   product.data$Pack.Qty.DQ[i] = "FAIL"
             }   
@@ -45,6 +53,13 @@ score.pack.qty <- function (product.data) {
             } 
             
       }
+      
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Pack.Qty.DQ")
+      p <- subset(product.data,select = report.cols)
+      p$Attribute <- "Pack.Qty"
+      colnames(p)[colnames(p)=="Pack.Qty.DQ"] <- "Status"
+      
+      p <<- p
       
       return(product.data)
       
@@ -71,6 +86,13 @@ score.colour <- function (product.data) {
             
       }
       
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Colour.DQ")
+      cr <- subset(product.data,select = report.cols)
+      cr$Attribute <- "Colour"
+      colnames(cr)[colnames(cr)=="Colour.DQ"] <- "Status"
+      
+      cr <<- cr
+      
       return(product.data)
       
 }
@@ -96,6 +118,13 @@ score.material <- function (product.data) {
             
       }
       
+      
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Material.DQ")
+      m <- subset(product.data,select = report.cols)
+      m$Attribute <- "Material"
+      colnames(m)[colnames(m)=="Material.DQ"] <- "Status"
+      
+      m <<- m
       return(product.data)
       
 }
@@ -120,6 +149,13 @@ score.power <- function (product.data) {
             } 
             
       }
+      
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Power.DQ")
+      po <- subset(product.data,select = report.cols)
+      po$Attribute <- "Power"
+      colnames(po)[colnames(po)=="Power.DQ"] <- "Status"
+      
+      po <<- po
       
       return(product.data)
       
@@ -146,6 +182,13 @@ score.capacity <- function (product.data) {
             
       }
       
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Capacity.DQ")
+      ca <- subset(product.data,select = report.cols)
+      ca$Attribute <- "Capacity"
+      colnames(ca)[colnames(ca)=="Capacity.DQ"] <- "Status"
+      
+      ca <<- ca
+      
       return(product.data)
       
 }
@@ -170,6 +213,13 @@ score.coverage <- function (product.data) {
             } 
             
       }
+      
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Coverage.DQ")
+      co <- subset(product.data,select = report.cols)
+      co$Attribute <- "Coverage"
+      colnames(co)[colnames(co)=="Coverage.DQ"] <- "Status"
+      
+      co <<- co
       
       return(product.data)
       
@@ -196,6 +246,13 @@ score.age <- function (product.data) {
             
       }
       
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Age.DQ")
+      ag <- subset(product.data,select = report.cols)
+      ag$Attribute <- "Age"
+      colnames(ag)[colnames(ag)=="Age.DQ"] <- "Status"
+      
+      ag <<- ag
+      
       return(product.data)
       
 }
@@ -220,6 +277,13 @@ score.washable <- function (product.data) {
             } 
             
       }
+      
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Washable.DQ")
+      w <- subset(product.data,select = report.cols)
+      w$Attribute <- "Washable"
+      colnames(w)[colnames(w)=="Washable.DQ"] <- "Status"
+      
+      w <<- w
       
       return(product.data)
       
@@ -246,6 +310,13 @@ score.model <- function (product.data) {
             
       }
       
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Model.DQ")
+      mo <- subset(product.data,select = report.cols)
+      mo$Attribute <- "Model.No"
+      colnames(mo)[colnames(mo)=="Model.DQ"] <- "Status"
+      
+      mo <<- mo
+      
       return(product.data)
       
 }
@@ -270,6 +341,13 @@ score.brand <- function (product.data) {
             } 
             
       }
+      
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Brand.DQ")
+      b <- subset(product.data,select = report.cols)
+      b$Attribute <- "Brand"
+      colnames(b)[colnames(b)=="Brand.DQ"] <- "Status"
+      
+      b <<- b
       
       return(product.data)
       
@@ -296,7 +374,16 @@ score.assembly <- function (product.data) {
             
       }
       
+      report.cols <- c("PSA_1","PSA_2","Article","Web.Description","Type","Assembly.DQ")
+      ay <- subset(product.data,select = report.cols)
+      ay$Attribute <- "Assembly"
+      colnames(ay)[colnames(ay)=="Assembly.DQ"] <- "Status"
+      
+      ay <<- ay
+      
       return(product.data)
       
 }
 #----------------------------------------------------------------------------------------------------------------------
+
+

@@ -64,9 +64,14 @@ compare.attributes <- function(original.df,updated.df,psa1) {
                   
             } # End sub-loop
       
-      # Split files by PSA2 and save them as CSV files
-      split.files(attribute.compare,psa1.products,attribute,psa1)
+      
+         
+      #Split files by PSA2 and save them as CSV files
+                  
+      split.files(attribute.compare,updated.df,attribute,psa1)
+                  
       # Split file by PSA2 and save the ones requiring a Brand check as CSV files
+                  
       brand.files(psa1)
             
       } # End main loop
@@ -74,21 +79,31 @@ compare.attributes <- function(original.df,updated.df,psa1) {
 } # End function
 
 
-split.files <- function(df1, df2, colatr,psa1) {
+
+split.files <- function(attribute.compare, psa1.update.data, attribute,psa1) {
       
-      psa2 <- unique(df1$PSA_2.x)
+# Export file of attribute comparison data
       
-      for(q in 1:NROW(psa2)) {
+      export.file.name <- paste(psa1,"_Updates_",attribute,".csv",sep = "")
+      colnames(attribute.compare) <- c("PSA_1","PSA_2","Article","Web.Description","Old.Value","New.Value","Change")
+      write.csv(attribute.compare,paste("D:/OneDrive/Work Files/Wilko/Data Cleanse/",psa1,"/Uploads/",export.file.name,sep = ""),row.names = FALSE)   
+      
+#Split files by PSA2 and Attribute
+      
+      all.psa2 <- unique(attribute.compare$PSA_2)
+      
+      for(i in 1:NROW(all.psa2)) {
             
-            x <- psa2[q]
-            psa2.file <- subset(df1, PSA_2.x == x)
+            psa2 <- all.psa2[i]
+            psa2.file <- subset(attribute.compare, PSA_2 == psa2)
+            
             update.file <- subset(psa2.file,Change ==  "Infill" | Change == "Update" | Change == "Blank")
-            check.file <- subset(df2,Title.Spelling == "CHECK" | Title.Brand == "CHECK" | Title.Size == "CHECK" | Title.Pack.Qty == "CHECK")
+            
+            check.file <- subset(psa1.update.data,Title.Spelling == "CHECK" | Title.Brand == "CHECK" | Title.Size == "CHECK" | Title.Pack.Qty == "CHECK")
             check.file <- subset(check.file[,c("PSA_1","PSA_2","Article","Web.Description","Brand","Size","Pack.Qty","Title.Spelling","Title.Brand","Title.Size","Title.Pack.Qty")])
             
             psa1.dir <- paste("D:/OneDrive/Work Files/Wilko/Data Cleanse/",psa1, "/",sep = "")
-            psa2.dir <- paste(psa1.dir,"PSA2/",x, sep = "")
-            #setwd("D:/OneDrive/R Projects/product-attributes/TOI/")
+            psa2.dir <- paste(psa1.dir,"PSA2/",psa2, sep = "")
             
             if(!dir.exists(psa2.dir)) {
             
@@ -99,8 +114,8 @@ split.files <- function(df1, df2, colatr,psa1) {
             update.cases <- NROW(update.file)
             check.cases <- NROW(check.file)
             
-            if(update.cases > 0) write.csv(update.file,paste(x,"_Update_",colatr," (",update.cases, ")",".csv",sep = ""),row.names = FALSE)
-            if(check.cases > 0) write.csv(check.file,paste(x,"_Check_Web_Description (",check.cases, ")",".csv",sep = ""),row.names = FALSE)
+            if(update.cases > 0) write.csv(update.file,paste(psa2,"_Update_",attribute," (",update.cases, ")",".csv",sep = ""),row.names = FALSE)
+            if(check.cases > 0) write.csv(check.file,paste(psa2,"_Check_Web_Description (",check.cases, ")",".csv",sep = ""),row.names = FALSE)
     
             setwd("..")
       }
@@ -108,13 +123,16 @@ split.files <- function(df1, df2, colatr,psa1) {
 }
 
 brand.files <- function(psa1) {
-      psa2 <- unique(psa1.products$PSA_2)
+      
+      psa2 <- unique(psa1.update.data$PSA_2)
       psa1.dir <- paste("D:/OneDrive/Work Files/Wilko/Data Cleanse/",psa1,"/",sep = "")
       
+      all.brand.issues <- subset(psa1.update.data,(Title.Brand == "FAIL"))
+      write.csv(all.brand.issues,paste("D:/OneDrive/Work Files/Wilko/Data Cleanse/",psa1,"/Uploads/",psa1,"_Updates_Brand.csv",sep=""),row.names = FALSE) 
+
       for(i in 1:NROW(psa2)) {
             
-            brand.issue <- subset(psa1.products,(PSA_2 == psa2[i] & Title.Brand == "FAIL"))
-            message(paste(psa1.dir,"PSA2/",psa2[i],sep = ""))
+            brand.issue <- subset(psa1.update.data,(PSA_2 == psa2[i] & Title.Brand == "FAIL"))
             setwd(paste(psa1.dir,"PSA2/",psa2[i],sep = ""))
             num.cases <- NROW(brand.issue)
             brand.issue <- brand.issue[,c("PSA_1","PSA_2","Article","Web.Description","Brand")]

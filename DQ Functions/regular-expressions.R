@@ -6,16 +6,17 @@
  
 # Regular Expressions for Sizes 
 
- check.fit <<-"^One Size$|^Small$|^Medium$|^Large$|^X-Large$|^XX-Large|^XXX-Large$|^Assorted$"
+ check.fit <<-"^One Size$|^Small$|^Medium$|^Large$|^X-Large$|^XX-Large|^XXX-Large$|^Assorted$|^Adult$"
  check.hygiene <<- "^X-Small$|^Small$|^Normal$|^Mini$|^Regular$|^Super Medium$|^Super$|^Super Plus$|^Long$|^Extra Long$|^Extra Large$|^Thin$|^Ultra$|^Extra$|^Maxi$"
  check.nappy <<- "^Other$|^Size 1$|^Size 2$|^Size 3$|^Size 4$|^Size 4\\+$|^Size 5$|^Size 5\\+$|^Size 6$|^Size 6\\+$"
  check.bandage <<- "^Size C$|^Size D$|^Size E$|^Size F$|^Size G$"
  check.shoe.size <<- "^Size 4|^Size 5|^Size 6$|^Size 7$|^Size 8$|^Size 9$|^Size 10$|^Size 11$"
  check.engine.size <<- "^[0-9]{1,3}(\\.[0-9]{1})?(cc)$"
- check.tissue <<- "^Regular$|^Extra Large$|^Pocket Pack$|^Mansize$|^Large$|"
+ check.tissue <<- "^Regular$|^Extra Large$|^Pocket Pack$|^Mansize$|^Large$"
  check.electrical <<- "^[0-9]{1,4}W$|^[0-9]{1,2} Slice$"
  check.crockery <<- "^[0-9]{1,2} Piece$|^[0-9]{1,2} Bottle$"
  check.drawer <<- "^[0-9] Drawer$"
+ check.bedding <<- "^Single$|^Double$|^Kingsize$|^Super Kingsize$"
  
 # Regular Expressions for Single Measures 
  
@@ -52,13 +53,16 @@
  # Regular Expressions for Material
  
  check.material.cat <<- "^Wood$|^Metal$|^Paper$|^Ceramic$|^Fabric$|^Plastic$|^Other$"
- check.material.value <<- "^Reed$|^Bamboo$|^Ash$|^Chipboard$|^Cork$|^Eucalyptus$|^MDF$|^Oak$|^Particleboard$|^Pine$|^Recycled Board$|^Softwood$|^Wicker$|^Willow$|^Aluminium$|^Brass$|^Chrome$|^Copper$|^Gold$|^Iron$|^Silver$|^Stainless Steel$|^Cardboard$|^Greyboard$|^Paper$|^China$|^Glass$|^Porcelain$|^Cotton$|^Elastane$|^Nylon$|^Polycotton$|^Polyester$|^Viscose$|^Acrylic$|^Fiberglass$|^Graphite$|^Latex$|^Melamine$|^PES$|^Polyamide$|^Polycarbonate$|^Polyethylene$|^Polypropylene$|^PVA$|^PVC$|^Vinyl$|^Bassine$|^Canvas$|^Coir$|^Faux Leather$|^Foam$|^Jute$|^Microfibre$|^Rubber$|^Polythene$|^Coco Fibre$|^Fleece$|^Galvanised Steel$|^Steel$"      
+ check.material.value <<- "^Slate$|^Chrome Plated$|^Teslin$|^Pyrex$|^Stoneware$|^Earthenware$|^Reed$|^Bamboo$|^Ash$|^Chipboard$|^Cork$|^Eucalyptus$|^MDF$|^Oak$|^Particleboard$|^Pine$|^Recycled Board$|^Softwood$|^Wicker$|^Willow$|^Aluminium$|^Brass$|^Chrome$|^Copper$|^Gold$|^Iron$|^Silver$|^Stainless Steel$|^Cardboard$|^Greyboard$|^Paper$|^China$|^Glass$|^Porcelain$|^Cotton$|^Elastane$|^Nylon$|^Polycotton$|^Polyester$|^Viscose$|^Acrylic$|^Fiberglass$|^Graphite$|^Latex$|^Melamine$|^PES$|^Polyamide$|^Polycarbonate$|^Polyethylene$|^Polypropylene$|^PVA$|^PVC$|^Vinyl$|^Bassine$|^Canvas$|^Coir$|^Faux Leather$|^Foam$|^Jute$|^Microfibre$|^Rubber$|^Polythene$|^Coco Fibre$|^Fleece$|^Galvanised Steel$|^Steel$|^EVA$"      
+ check.material.effect <<- "^(Copper|Silver|Gold|Bronze) Effect$"
+ check.material.pct <<- "^[0-9]{1,3}% (Cotton|Polyester)$"
+ check.material.ratio <<- "^[0-9]{1,2}% (Cotton|Polyester) - [0-9]{1,2}% (Cotton|Polyester)$"
  
- check.material <<- paste(check.material.cat,"|",check.material.value,sep = "") 
+ check.material <<- paste(check.material.cat,check.material.value,check.material.effect,check.material.pct,check.material.ratio,sep = "|") 
  
 # Regular Expressions for Washable
  
- check.washable <<- "^Do Not Wash$|^Wash at 30$|^Wash at 40$|^Wash at 40 Synth$|^Wash at 40 Wool$|^Wash at 60$|^Hand Wash Only$|^Dry Clean Only$|^Spot Clean Only$|^Wipe Clean Only$|^Dishwasher proof$"
+ check.washable <<- "^Washable$|^Do Not Wash$|^Wash at 30$|^Wash at 40$|^Wash at 40 Synth$|^Wash at 40 Wool$|^Wash at 60$|^Hand Wash Only$|^Dry Clean Only$|^Spot Clean Only$|^Wipe Clean Only$|^Dishwasher proof$"
  
  # Regular Expressions for Age
  
@@ -70,7 +74,7 @@
  
  # Regular Expressions for Capacity
  
- check.capacity <<- "^[0-9]{1,3}(\\.[0-9]{1,2})?(ml|L)$"
+ check.capacity <<- "^[0-9]{1,3}(\\.[0-9]{1,2})?(ml|L| Bottles| Pints)$"
  
  # Regular Expressions for Coverage
  
@@ -86,40 +90,4 @@
  
  #check.size <<- paste(check.fit,"|",check.hygiene,"|",check.nappy,"|",check.bandage,"|",check.shoe.size,"|",check.engine.size,sep = "")
  check.power <<- paste(check.power.category,"|",check.power.wattage,sep = "")
-#------------------------------------------------------------------------------------------------------------------------
 
-# Data Quality Classification and Scoring
-
-# An attribute that is deemed a Critical Success Factor for a product type is missing e.g. colour for duvet covers
-dq.rule.1.desc <<- "Critical Attribute Missing" 
-dq.rule.1.score <<- -100
-
-# An attribute value does not conform to one of the predefned lists of reference data or the correct format
-dq.rule.2.desc <<- "Inconsistent Attribute" 
-dq.rule.2.score <<- - 50
-
-# There may be a questionable term in the Web Title e.g. use of 'Bodywash' instead of 'Body Wash'
-dq.rule.3.desc <<- "Check Web Title Description" 
-dq.rule.3.score <<- 0
-
-# The product must have either a Pack Qty or Size attribute completed
-dq.rule.4.desc <<- "Pack Qty or Size Required" 
-dq.rule.4.score <<- -100
-
-# The product does not have a web title 
-dq.rule.5.desc <<- "Web Title Missing" 
-dq.rule.5.score <<- -100
-
-# The brand in the Web Title is different to the Brand in the attribute field
-dq.rule.6.desc <<- "Inconsistent Brand" 
-dq.rule.6.score <<- -50
-
-# The pack qty in the Web Title is different to the Pack Qty in the attribute field
-dq.rule.7.desc <<- "Inconsistent Pack Qty" 
-dq.rule.7.score <<- -50
-
-# The size in the Web Title is different to the Size in the attribute field
-dq.rule.8.desc <<- "Inconsistent Size" 
-dq.rule.8.score <<- -50
-
-#------------------------------------------------------------------------------------------------------------------------

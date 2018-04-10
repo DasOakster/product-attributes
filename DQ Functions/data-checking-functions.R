@@ -22,7 +22,7 @@ dq.score.pack.qty.format <- function(product.data, reg.ex) {
             else {
                   
                   product.data$Pack.Qty.Format[i] <- "FAil"
-                  product.data$Pack.Qty.Format.Score[i] <- dq.rule.2.score
+                  product.data$Pack.Qty.Format.Score[i] <- dq.score.partial.fail
             }
             
             
@@ -50,7 +50,7 @@ dq.score.colour.format <- function(product.data, reg.ex) {
             else {
                   
                   product.data$Colour.Format[i] <- "FAIL"
-                  product.data$Colour.Format.Score[i] <- dq.rule.2.score
+                  product.data$Colour.Format.Score[i] <- dq.score.partial.fail
             }
             
       }
@@ -76,7 +76,7 @@ dq.score.size.format <- function(product.data, reg.ex) {
             else {
                   
                   product.data$Size.Format[i] <- "FAIL"
-                  product.data$Size.Format.Score[i] <- dq.rule.2.score
+                  product.data$Size.Format.Score[i] <- dq.score.partial.fail
             }
             
       }
@@ -96,7 +96,7 @@ dq.score.pack.or.size <- function(product.data) {
             if (is.na(product.data$Size[i]) && is.na(product.data$Pack.Qty[i])) {
                   
                   product.data$Pack.Or.Size[i] <- "FAIL"
-                  product.data$Pack.Or.Size.Score[i] <- dq.rule.4.score
+                  product.data$Pack.Or.Size.Score[i] <- dq.score.critical.fail
             }
             
             else {
@@ -122,7 +122,7 @@ for(i in 1:NROW(product.data)) {
       if(grepl(toi.web.desc.err,product.data$Web.Description[i],perl = TRUE) == TRUE) {
             
             product.data$Title.Spelling[i] <- "CHECK"
-            product.data$Title.Spelling.Score[i] <- dq.rule.3.score
+            product.data$Title.Spelling.Score[i] <- dq.score.check
       }
       
       
@@ -160,7 +160,7 @@ dq.score.title.pack.qty <- function(product.data) {
                   
                   else {
                         product.data$Title.Pack.Qty[i] <- "FAIL"
-                        product.data$Title.Pack.Qty.Score[i] <- -50
+                        product.data$Title.Pack.Qty.Score[i] <- dq.score.minor.fail
                   }
                   
             }
@@ -202,7 +202,7 @@ for(i in 1:NROW(product.data)) {
             else if (grepl(size.pattern,product.data$Web.Description[i],perl = TRUE) == TRUE && grepl(size,product.data$Web.Description[i],perl = TRUE) == FALSE){
             
             product.data$Title.Size[i] <- "FAIL"
-            product.data$Title.Size.Score[i] <- -50
+            product.data$Title.Size.Score[i] <- dq.score.minor.fail
       }
       
       else {
@@ -227,7 +227,7 @@ dq.score.title.brand <- function(product.data) {
             
             if (is.na(product.data$Brand[i])) {
                   
-                  product.data$Title.Brand.Score[i] <- 50
+                  product.data$Title.Brand.Score[i] <- dq.score.partial.fail
                   product.data$Title.Brand[i] <- "FAIL"
             }
             
@@ -258,7 +258,7 @@ dq.score.colour.required <- function(product.data) {
             if (product.data$Type[i] %in% colour.required && is.na(product.data$Colour[i])) {
                   
                   product.data$Colour.Required[i] <- "FAIL"
-                  product.data$Colour.Required.Score[i] <- dq.rule.1.score
+                  product.data$Colour.Required.Score[i] <- dq.score.critical.fail
             }
             
             
@@ -283,7 +283,7 @@ dq.score.size.required <- function(product.data) {
             if (product.data$Type[i] %in% size.required && is.na(product.data$Size[i])) {
                   
                   product.data$Size.Required[i] <- "FAIL"
-                  product.data$Size.Required.Score[i] <- dq.rule.1.score
+                  product.data$Size.Required.Score[i] <- dq.score.critical.fail
             }
             
             
@@ -306,7 +306,7 @@ dq.score.material.required <- function(product.data) {
             if (product.data$Type[i] %in% material.required && is.na(product.data$Material[i])) {
                   
                   product.data$Material.Required[i] <- "FAIL"
-                  product.data$Material.Required.Score[i] <- dq.rule.1.score
+                  product.data$Material.Required.Score[i] <- dq.score.critical.fail
             }
             
             
@@ -330,7 +330,7 @@ dq.score.pack.required <- function(product.data) {
             if (product.data$Type[i] %in% pack.qty.required && is.na(product.data$Pack.Qty[i])) {
                   
                   product.data$Pack.Qty.Required[i] <- "FAIL"
-                  product.data$Pack.Qty.Required.Score[i] <- dq.rule.1.score
+                  product.data$Pack.Qty.Required.Score[i] <- dq.score.critical.fail
             }
             
             
@@ -354,7 +354,7 @@ dq.score.age.required <- function(product.data) {
             if (product.data$Type[i] %in% age.required && is.na(product.data$Age[i])) {
                   
                   product.data$Age.Required[i] <- "FAIL"
-                  product.data$Age.Required.Score[i] <- dq.rule.1.score
+                  product.data$Age.Required.Score[i] <- dq.score.critical.fail
             }
             
             
@@ -378,7 +378,7 @@ dq.score.power.required <- function(product.data) {
             if (product.data$Type[i] %in% power.required && is.na(product.data$Power[i])) {
                   
                   product.data$Power.Required[i] <- "FAIL"
-                  product.data$Power.Required.Score[i] <- dq.rule.1.score
+                  product.data$Power.Required.Score[i] <- dq.score.critical.fail
             }
             
             
@@ -402,7 +402,7 @@ dq.score.capacity.required <- function(product.data) {
             if (product.data$Type[i] %in% capacity.required && is.na(product.data$Capacity[i])) {
                   
                   product.data$Capacity.Required[i] <- "FAIL"
-                  product.data$Capacity.Required.Score[i] <- dq.rule.1.score
+                  product.data$Capacity.Required.Score[i] <- dq.score.critical.fail
             }
             
             
@@ -426,7 +426,7 @@ dq.score.coverage.required <- function(product.data) {
             if (product.data$Type[i] %in% coverage.required && is.na(product.data$Coverage[i])) {
                   
                   product.data$Coverage.Required[i] <- "FAIL"
-                  product.data$Coverage.Required.Score[i] <- dq.rule.1.score
+                  product.data$Coverage.Required.Score[i] <- dq.score.critical.fail
             }
             
             
@@ -450,7 +450,7 @@ dq.score.modelnumber.required <- function(product.data) {
             if (product.data$Type[i] %in% model.number.required && is.na(product.data$Model.Number[i])) {
                   
                   product.data$Model.Number.Required[i] <- "FAIL"
-                  product.data$Model.Number.Score[i] <- dq.rule.1.score
+                  product.data$Model.Number.Score[i] <- dq.score.critical.fail
             }
             
             
@@ -474,7 +474,7 @@ dq.score.washable.required <- function(product.data) {
             if (product.data$Type[i] %in% washable.required && is.na(product.data$Washable[i])) {
                   
                   product.data$Washable.Required[i] <- "FAIL"
-                  product.data$Washable.Required.Score[i] <- dq.rule.1.score
+                  product.data$Washable.Required.Score[i] <- dq.score.critical.fail
             }
             
             
@@ -498,7 +498,7 @@ dq.score.assembly.required <- function(product.data) {
             if (product.data$Type[i] %in% assembly.required && is.na(product.data$Assembly[i])) {
                   
                   product.data$Assembly.Required[i] <- "FAIL"
-                  product.data$Assembly.Required.Score[i] <- dq.rule.1.score
+                  product.data$Assembly.Required.Score[i] <- dq.score.critical.fail
             }
             
             
@@ -529,7 +529,7 @@ dq.score.assembly.format <- function(product.data, reg.ex) {
             else {
                   
                   product.data$Assembly.Format[i] <- "FAil"
-                  product.data$Assembly.Format.Score[i] <- dq.rule.2.score
+                  product.data$Assembly.Format.Score[i] <- dq.score.partial.fail
             }
             
             
@@ -557,7 +557,7 @@ dq.score.washable.format <- function(product.data, reg.ex) {
             else {
                   
                   product.data$Washable.Format[i] <- "FAil"
-                  product.data$Washable.Format.Score[i] <- dq.rule.2.score
+                  product.data$Washable.Format.Score[i] <- dq.score.partial.fail
             }
             
             
@@ -585,7 +585,7 @@ dq.score.material.format <- function(product.data, reg.ex) {
             else {
                   
                   product.data$Material.Format[i] <- "FAil"
-                  product.data$Material.Format.Score[i] <- dq.rule.2.score
+                  product.data$Material.Format.Score[i] <- dq.score.partial.fail
             }
             
             
@@ -613,7 +613,7 @@ dq.score.age.format <- function(product.data, reg.ex) {
             else {
                   
                   product.data$Age.Format[i] <- "FAil"
-                  product.data$Age.Format.Score[i] <- dq.rule.2.score
+                  product.data$Age.Format.Score[i] <- dq.score.partial.fail
             }
             
             
@@ -641,7 +641,7 @@ dq.score.power.format <- function(product.data, reg.ex) {
             else {
                   
                   product.data$Power.Format[i] <- "FAil"
-                  product.data$Power.Format.Score[i] <- dq.rule.2.score
+                  product.data$Power.Format.Score[i] <- dq.score.partial.fail
             }
             
             
@@ -669,7 +669,7 @@ dq.score.capacity.format <- function(product.data, reg.ex) {
             else {
                   
                   product.data$Capacity.Format[i] <- "FAil"
-                  product.data$Capacity.Format.Score[i] <- dq.rule.2.score
+                  product.data$Capacity.Format.Score[i] <- dq.score.partial.fail
             }
             
             
@@ -697,7 +697,7 @@ dq.score.coverage.format <- function(product.data, reg.ex) {
             else {
                   
                   product.data$Coverage.Format[i] <- "FAil"
-                  product.data$Coverage.Format.Score[i] <- dq.rule.2.score
+                  product.data$Coverage.Format.Score[i] <- dq.score.partial.fail
             }
             
             
