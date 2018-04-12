@@ -3,7 +3,7 @@ attribute.data.quality <- function(psa1) {
 
 # Set up Working Directories, Source Scripts and Target files
 
-      setwd("D:/OneDrive/R Projects/product-attributes")
+      setwd("D:/OneDrive/Work Files/Wilko/Data Cleanse/SAP Extracts")
       
       source("D:/OneDrive/R Projects/product-attributes/DQ Functions/regular-expressions.R")
       source("D:/OneDrive/R Projects/product-attributes/DQ Functions/data-checking-functions.R")
@@ -12,18 +12,19 @@ attribute.data.quality <- function(psa1) {
       source("D:/OneDrive/R Projects/product-attributes/DQ Functions/summarise-changes.R")
       source("D:/OneDrive/R Projects/product-attributes/DQ Functions/dq-scoring.R")
       
-      file.to.score <- paste("WIP/",psa1,"_WIP.csv",sep ="")
-      file.to.compare <- paste(psa1," All.csv",sep ="")
+      files.to.score <- list.files()
       
-      wip.dir <- paste("D:/OneDrive/Work Files/Wilko/Data Cleanse/PSA Folders/",psa1,"/WIP/",sep = "")
-      csf.dir <- paste("D:/OneDrive/Work Files/Wilko/Data Cleanse/PSA Folders/",psa1,"/CSF Files/",sep = "")
-      psa.dir <- paste("D:/OneDrive/Work Files/Wilko/Data Cleanse/PSA Folders/",psa1,"/",sep = "")
-      sap.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/SAP Extracts/"
+      
+      
+      
+      
+      csf.dir <- paste("D:/OneDrive/Work Files/Wilko/Data Cleanse/",psa1,"/CSF Files/",sep = "")
+      
    
 # Read in data set for scoring
       
-      psa1.update.data<- read.csv(paste(psa.dir,file.to.score,sep=""))
-      psa1.source.data <- read.csv(paste(sap.dir,file.to.compare,sep=""))
+      psa1.update.data<- read.csv(paste(toi.dir,file.to.score,sep=""))
+      psa1.source.data <- read.csv(paste(toi.dir,file.to.compare,sep=""))
       
 # Create RegEx for Attribute Columns checks by PSA1
       
