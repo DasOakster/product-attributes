@@ -10,7 +10,12 @@ size.cols <- c(df.columns[(grepl("Score",df.columns)==TRUE & grepl("Size",df.col
 
 for(i in 1:NROW(product.data)){
 
-      if(rowSums(product.data[i,size.cols]) < dq.score.minor.fail) {
+      if(product.data$Size.Required.Score == 0 && !product.data$Type[i] %in% size.required) {
+            
+            product.data$Size.DQ[i] <- "NA"
+      }
+      
+      else if(rowSums(product.data[i,size.cols]) < dq.score.minor.fail) {
             
             product.data$Size.DQ[i] = "FAIL"
       }   
@@ -43,7 +48,13 @@ score.pack.qty <- function (product.data) {
       
       for(i in 1:NROW(product.data)){
             
-            if(rowSums(product.data[i,pack.cols]) < dq.score.minor.fail) {
+            if(product.data$Pack.Qty.Required.Score == 0 && !product.data$Type[i] %in% pack.qty.required) {
+                  
+                  product.data$Pack.Qty.DQ[i] <- "NA"
+            }
+            
+            
+            else if(rowSums(product.data[i,pack.cols]) < dq.score.minor.fail) {
                   
                   product.data$Pack.Qty.DQ[i] = "FAIL"
             }   
@@ -75,14 +86,19 @@ score.colour <- function (product.data) {
       
       for(i in 1:NROW(product.data)){
             
-            if(rowSums(product.data[i,colour.cols]) < 0) {
+            if(product.data$Colour.Required.Score == 0 && !product.data$Type[i] %in% colour.required) {
                   
-                  product.data$Colour.DQ[i] = "FAIL"
-            }   
+                  product.data$Colour.DQ[i] <- "NA"
+            }
             
-            else {
-                  product.data$Colour.DQ[i] = "PASS"
-            } 
+                  else if(rowSums(product.data[i,colour.cols]) < 0) {
+                        
+                        product.data$Colour.DQ[i] <- "FAIL"
+                  }   
+                  
+                  else {
+                        product.data$Colour.DQ[i] <- "PASS"
+                  } 
             
       }
       
@@ -107,14 +123,21 @@ score.material <- function (product.data) {
       
       for(i in 1:NROW(product.data)){
             
-            if(rowSums(product.data[i,material.cols]) < 0) {
-                  
-                  product.data$Material.DQ[i] = "FAIL"
-            }   
             
-            else {
-                  product.data$Material.DQ[i] = "PASS"
-            } 
+            if(product.data$Material.Required.Score == 0 && !product.data$Type[i] %in% material.required) {
+                  
+                  product.data$Material.DQ[i] <- "NA"
+            }
+            
+            
+                  else if(rowSums(product.data[i,material.cols]) < 0) {
+                        
+                        product.data$Material.DQ[i] = "FAIL"
+                  }   
+                  
+                  else {
+                        product.data$Material.DQ[i] = "PASS"
+                  } 
             
       }
       
@@ -139,14 +162,19 @@ score.power <- function (product.data) {
       
       for(i in 1:NROW(product.data)){
             
-            if(rowSums(product.data[i,power.cols]) < 0) {
+            if(product.data$Power.Required.Score == 0 && !product.data$Type[i] %in% power.required) {
                   
-                  product.data$Power.DQ[i] = "FAIL"
-            }   
-            
-            else {
-                  product.data$Power.DQ[i] = "PASS"
-            } 
+                  product.data$Power.DQ[i] <- "NA"
+            }
+                  
+                  else if(rowSums(product.data[i,power.cols]) < 0) {
+                        
+                        product.data$Power.DQ[i] = "FAIL"
+                  }   
+                  
+                  else {
+                        product.data$Power.DQ[i] = "PASS"
+                  } 
             
       }
       
@@ -171,14 +199,19 @@ score.capacity <- function (product.data) {
       
       for(i in 1:NROW(product.data)){
             
-            if(rowSums(product.data[i,capacity.cols]) < 0) {
+            if(product.data$Capacity.Required.Score == 0 && !product.data$Type[i] %in% capacity.required) {
                   
-                  product.data$Capacity.DQ[i] = "FAIL"
-            }   
+                  product.data$Capacity.DQ[i] <- "NA"
+            }
             
-            else {
-                  product.data$Capacity.DQ[i] = "PASS"
-            } 
+                  else if(rowSums(product.data[i,capacity.cols]) < 0) {
+                        
+                        product.data$Capacity.DQ[i] = "FAIL"
+                  }   
+                  
+                  else {
+                        product.data$Capacity.DQ[i] = "PASS"
+                  } 
             
       }
       
@@ -203,14 +236,19 @@ score.coverage <- function (product.data) {
       
       for(i in 1:NROW(product.data)){
             
-            if(rowSums(product.data[i,coverage.cols]) < 0) {
+            if(product.data$Coverage.Required.Score == 0 && !product.data$Type[i] %in% coverage.required) {
                   
-                  product.data$Coverage.DQ[i] = "FAIL"
-            }   
+                  product.data$Coverage.DQ[i] <- "NA"
+            }
             
-            else {
-                  product.data$Coverage.DQ[i] = "PASS"
-            } 
+                  else if(rowSums(product.data[i,coverage.cols]) < 0) {
+                        
+                        product.data$Coverage.DQ[i] = "FAIL"
+                  }   
+                  
+                  else {
+                        product.data$Coverage.DQ[i] = "PASS"
+                  } 
             
       }
       
@@ -235,14 +273,19 @@ score.age <- function (product.data) {
       
       for(i in 1:NROW(product.data)){
             
-            if(rowSums(product.data[i,age.cols]) < 0) {
+            if(product.data$Age.Required.Score == 0 && !product.data$Type[i] %in% age.required) {
                   
-                  product.data$Age.DQ[i] = "FAIL"
-            }   
+                  product.data$Age.DQ[i] <- "NA"
+            }
             
-            else {
-                  product.data$Age.DQ[i] = "PASS"
-            } 
+                  else if(rowSums(product.data[i,age.cols]) < 0) {
+                        
+                        product.data$Age.DQ[i] = "FAIL"
+                  }   
+                  
+                  else {
+                        product.data$Age.DQ[i] = "PASS"
+                  } 
             
       }
       
@@ -267,14 +310,21 @@ score.washable <- function (product.data) {
       
       for(i in 1:NROW(product.data)){
             
-            if(rowSums(product.data[i,washable.cols]) < 0) {
-                  
-                  product.data$Washable.DQ[i] = "FAIL"
-            }   
             
-            else {
-                  product.data$Washable.DQ[i] = "PASS"
-            } 
+            if(product.data$Washable.Required.Score == 0 && !product.data$Type[i] %in% washable.required) {
+                  
+                  product.data$Washable.DQ[i] <- "NA"
+            }
+            
+            
+                  else if(rowSums(product.data[i,washable.cols]) < 0) {
+                        
+                        product.data$Washable.DQ[i] = "FAIL"
+                  }   
+                  
+                  else {
+                        product.data$Washable.DQ[i] = "PASS"
+                  } 
             
       }
       
@@ -299,14 +349,19 @@ score.model <- function (product.data) {
       
       for(i in 1:NROW(product.data)){
             
-            if(rowSums(product.data[i,model.cols]) < 0) {
+            if(product.data$Model.Number.Required.Score == 0 && !product.data$Type[i] %in% model.number.required) {
                   
-                  product.data$Model.DQ[i] = "FAIL"
-            }   
+                  product.data$Model.DQ[i] <- "NA"
+            }
             
-            else {
-                  product.data$Model.DQ[i] = "PASS"
-            } 
+                  else if(rowSums(product.data[i,model.cols]) < 0) {
+                        
+                        product.data$Model.DQ[i] = "FAIL"
+                  }   
+                  
+                  else {
+                        product.data$Model.DQ[i] = "PASS"
+                  } 
             
       }
       
@@ -363,14 +418,19 @@ score.assembly <- function (product.data) {
       
       for(i in 1:NROW(product.data)){
             
-            if(rowSums(product.data[i,assembly.cols]) < 0) {
+            if(product.data$Assembly.Required.Score == 0 && !product.data$Type[i] %in% assembly.required) {
                   
-                  product.data$Assembly.DQ[i] = "FAIL"
-            }   
+                  product.data$Assembly.DQ[i] <- "NA"
+            }
             
-            else {
-                  product.data$Assembly.DQ[i] = "PASS"
-            } 
+                  else if(rowSums(product.data[i,assembly.cols]) < 0) {
+                        
+                        product.data$Assembly.DQ[i] = "FAIL"
+                  }   
+                  
+                  else {
+                        product.data$Assembly.DQ[i] = "PASS"
+                  } 
             
       }
       
