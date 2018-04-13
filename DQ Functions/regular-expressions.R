@@ -44,8 +44,6 @@
  
  check.pack.qty <<- "^[0-9]{1,3}$"
                           
- #check.size.all <<- paste(check.size, "|",check.weight,"|", check.measure,"|",check.dimension,sep="")
- 
  # Minor web title formatting errors
 
  toi.web.desc.err <<- "2in1|EDT|\\&|Bodywash|Eyedrops|Bodyspray|Dryskin|Footcare|Lipgloss|Lipliner|Facewash|Coolmint|Nailpolish|Supergel|Supershine|Footcare|Cremepuff"
@@ -87,7 +85,84 @@
  check.power.category <<- "^Mains$|^Gas$|^Petrol$|^Battery$|^Solar$|^Electric$|^Manual$"
  check.power.wattage <<- "^[0-9]{1,4}W$"
  
- 
  #check.size <<- paste(check.fit,"|",check.hygiene,"|",check.nappy,"|",check.bandage,"|",check.shoe.size,"|",check.engine.size,sep = "")
  check.power <<- paste(check.power.category,"|",check.power.wattage,sep = "")
 
+ #--------------------------------------------------------------------------------------------------------------
+ 
+ get.size <- function(psa1) {
+      
+        # Allocate correct Regular Expressions for PSA1
+       if(psa1 == "TOI") {
+             
+             check.size <- paste(check.weight,
+                                 check.hygiene,
+                                 check.nappy,
+                                 check.bandage,
+                                 check.tissue,
+                                 check.measure,
+                                 check.fit,
+                                 sep="|")
+       }
+       
+       else if(psa1 == "CLE") {
+             
+             check.size <- paste(check.weight,
+                                 check.measure,
+                                 sep="|")
+       }
+       
+       
+       else if(psa1 == "DIS") {
+             
+             check.size <- paste(check.weight,
+                                 check.measure,
+                                 sep="|")
+       }
+       
+       else if(psa1 == "GAR") {
+             
+             check.size <- paste(check.weight,
+                                 check.measure,
+                                 check.dimension,
+                                 check.fit,
+                                 check.engine.size,
+                                 check.electrical,
+                                 check.shoe.size,
+                                 sep="|")
+       }
+       
+       else if(psa1 == "KIT") {
+             
+             check.size <- paste(check.weight,
+                                 check.measure,
+                                 check.dimension,
+                                 check.fit,
+                                 check.drawer,
+                                 check.electrical,
+                                 sep="|")
+       }
+       
+       else if(psa1 == "HOM") {
+             
+             check.size <- paste(check.weight,
+                                 check.measure,
+                                 check.dimension,
+                                 check.fit,
+                                 check.drawer,
+                                 check.bedding,
+                                 check.electrical,
+                                 sep="|")
+       }
+       
+       else {
+             
+             check.size <- paste(check.weight,
+                                 check.measure,
+                                 check.dimension,
+                                 sep="|")
+       }
+       
+       return(check.size)
+       
+ }
