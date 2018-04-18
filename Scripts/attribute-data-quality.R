@@ -3,14 +3,14 @@ attribute.data.quality <- function(psa1) {
 
 # Set up Working Directories, Source Scripts and Target files
 
-      setwd("D:/OneDrive/R Projects/product-attributes")
+      setwd("D:/OneDrive/R Projects/wilko-data-quality")
       
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/regular-expressions.R")
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/data-checking-functions.R")
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/split-files.R")
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/create-summary-columns.R")
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/summarise-changes.R")
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/dq-scoring.R")
+      source("D:/OneDrive/R Projects/wilko-data-quality/DQ Functions/regular-expressions.R")
+      source("D:/OneDrive/R Projects/wilko-data-quality/DQ Functions/data-checking-functions.R")
+      source("D:/OneDrive/R Projects/wilko-data-quality/DQ Functions/split-files.R")
+      source("D:/OneDrive/R Projects/wilko-data-quality/DQ Functions/create-summary-columns.R")
+      source("D:/OneDrive/R Projects/wilko-data-quality/DQ Functions/summarise-changes.R")
+      source("D:/OneDrive/R Projects/wilko-data-quality/DQ Functions/dq-scoring.R")
       
       file.to.score <- paste("WIP/",psa1,"_WIP.csv",sep ="")
       file.to.compare <- paste(psa1," All.csv",sep ="")

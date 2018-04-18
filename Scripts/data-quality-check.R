@@ -5,12 +5,12 @@ attribute.data.quality <- function(psa1) {
 
       setwd("D:/OneDrive/Work Files/Wilko/Data Cleanse/SAP Extracts")
       
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/regular-expressions.R")
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/data-checking-functions.R")
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/split-files.R")
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/create-summary-columns.R")
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/summarise-changes.R")
-      source("D:/OneDrive/R Projects/product-attributes/DQ Functions/dq-scoring.R")
+      source("D:/OneDrive/R Projects/web-data-quality/DQ Functions/regular-expressions.R")
+      source("D:/OneDrive/R Projects/web-data-quality/DQ Functions/data-checking-functions.R")
+      source("D:/OneDrive/R Projects/web-data-quality/DQ Functions/split-files.R")
+      source("D:/OneDrive/R Projects/web-data-quality/DQ Functions/create-summary-columns.R")
+      source("D:/OneDrive/R Projects/web-data-quality/DQ Functions/summarise-changes.R")
+      source("D:/OneDrive/R Projects/web-data-quality/DQ Functions/dq-scoring.R")
       
       files.to.score <- list.files()
       

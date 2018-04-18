@@ -46,7 +46,7 @@
                           
  # Minor web title formatting errors
 
- toi.web.desc.err <<- "2in1|EDT|\\&|Bodywash|Eyedrops|Bodyspray|Dryskin|Footcare|Lipgloss|Lipliner|Facewash|Coolmint|Nailpolish|Supergel|Supershine|Footcare|Cremepuff"
+ web.title.check <<- "2in1|EDT|\\&|Bodywash|Eyedrops|Bodyspray|Dryskin|Footcare|Lipgloss|Lipliner|Facewash|Coolmint|Nailpolish|Supergel|Supershine|Footcare|Cremepuff"
  
  # Regular Expressions for Material
  
