@@ -17,6 +17,8 @@
  check.crockery <<- "^[0-9]{1,2} Piece$|^[0-9]{1,2} Bottle$"
  check.drawer <<- "^[0-9] Drawer$"
  check.bedding <<- "^Single$|^Double$|^Kingsize$|^Super Kingsize$"
+ check.book <<- "^A3$|^A4$|^A5$|^A6$"
+ check.computer <<- "^[0-9]{1,3}GB$|^[0-9]{1,4}MB$|^[0-9]TB$"
  
 # Regular Expressions for Single Measures 
  
@@ -36,7 +38,7 @@
  
  # Regular Expressions for Ranges of same units
  
- check.range <<- "^[0-9]{1,2}-[0-9]{1,2}(mm|cm|m)$"
+ check.range <<- "^[0-9]{1,2}-[0-9]{1,2}(mm|cm|m|in|ft)$"
 
  check.dimension <<- paste(check.dim,"|",check.dimx,"|",check.range,sep = "")
  
@@ -51,7 +53,7 @@
  # Regular Expressions for Material
  
  check.material.cat <<- "^Wood$|^Metal$|^Paper$|^Ceramic$|^Fabric$|^Plastic$|^Other$"
- check.material.value <<- "^Slate$|^Chrome Plated$|^Teslin$|^Pyrex$|^Stoneware$|^Earthenware$|^Reed$|^Bamboo$|^Ash$|^Chipboard$|^Cork$|^Eucalyptus$|^MDF$|^Oak$|^Particleboard$|^Pine$|^Recycled Board$|^Softwood$|^Wicker$|^Willow$|^Aluminium$|^Brass$|^Chrome$|^Copper$|^Gold$|^Iron$|^Silver$|^Stainless Steel$|^Cardboard$|^Greyboard$|^Paper$|^China$|^Glass$|^Porcelain$|^Cotton$|^Elastane$|^Nylon$|^Polycotton$|^Polyester$|^Viscose$|^Acrylic$|^Fiberglass$|^Graphite$|^Latex$|^Melamine$|^PES$|^Polyamide$|^Polycarbonate$|^Polyethylene$|^Polypropylene$|^PVA$|^PVC$|^Vinyl$|^Bassine$|^Canvas$|^Coir$|^Faux Leather$|^Foam$|^Jute$|^Microfibre$|^Rubber$|^Polythene$|^Coco Fibre$|^Fleece$|^Galvanised Steel$|^Steel$|^EVA$"      
+ check.material.value <<- "^Leather$|^Felt$|^Plush$|^Rope$|^Sisal$|^Slate$|^Chrome Plated$|^Teslin$|^Pyrex$|^Stoneware$|^Earthenware$|^Reed$|^Bamboo$|^Ash$|^Chipboard$|^Cork$|^Eucalyptus$|^MDF$|^Oak$|^Particleboard$|^Pine$|^Recycled Board$|^Softwood$|^Wicker$|^Willow$|^Aluminium$|^Brass$|^Chrome$|^Copper$|^Gold$|^Iron$|^Silver$|^Stainless Steel$|^Cardboard$|^Greyboard$|^Paper$|^China$|^Glass$|^Porcelain$|^Cotton$|^Elastane$|^Nylon$|^Polycotton$|^Polyester$|^Viscose$|^Acrylic$|^Fiberglass$|^Graphite$|^Latex$|^Melamine$|^PES$|^Polyamide$|^Polycarbonate$|^Polyethylene$|^Polypropylene$|^PVA$|^PVC$|^Vinyl$|^Bassine$|^Canvas$|^Coir$|^Faux Leather$|^Foam$|^Jute$|^Microfibre$|^Rubber$|^Polythene$|^Coco Fibre$|^Fleece$|^Galvanised Steel$|^Steel$|^EVA$"      
  check.material.effect <<- "^(Copper|Silver|Gold|Bronze) Effect$"
  check.material.pct <<- "^[0-9]{1,3}% (Cotton|Polyester)$"
  check.material.ratio <<- "^[0-9]{1,2}% (Cotton|Polyester) - [0-9]{1,2}% (Cotton|Polyester)$"
@@ -83,7 +85,7 @@
  # Regular Expressions for Power
  
  check.power.category <<- "^Mains$|^Gas$|^Petrol$|^Battery$|^Solar$|^Electric$|^Manual$"
- check.power.wattage <<- "^[0-9]{1,4}W$"
+ check.power.wattage <<- "^[0-9]{1,4}(\\.[0-9])?W$"
  
  #check.size <<- paste(check.fit,"|",check.hygiene,"|",check.nappy,"|",check.bandage,"|",check.shoe.size,"|",check.engine.size,sep = "")
  check.power <<- paste(check.power.category,"|",check.power.wattage,sep = "")

@@ -96,6 +96,28 @@ attribute.data.quality <- function(psa1) {
             
       }
       
+      else if(psa1 == "PET") {
+            
+            check.size <- paste(check.weight,
+                                check.measure,
+                                check.dimension,
+                                check.fit,
+                                check.range,
+                                sep="|")
+            
+      }
+      
+      else if(psa1 == "SBK") {
+            
+            check.size <- paste(check.weight,
+                                check.measure,
+                                check.dimension,
+                                check.book,
+                                check.computer,
+                                sep="|")
+            
+      }
+      
       else {
       
             check.size <- paste(check.weight,

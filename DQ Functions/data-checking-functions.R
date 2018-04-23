@@ -119,7 +119,7 @@ dq.score.web.description <- function(product.data) {
 
 for(i in 1:NROW(product.data)) {
       
-      if(grepl(toi.web.desc.err,product.data$Web.Description[i],perl = TRUE) == TRUE) {
+      if(grepl(web.title.check,product.data$Web.Description[i],perl = TRUE) == TRUE) {
             
             product.data$Title.Spelling[i] <- "CHECK"
             product.data$Title.Spelling.Score[i] <- dq.score.check
@@ -219,6 +219,32 @@ for(i in 1:NROW(product.data)) {
 # Data Integrity - Inconsistency between Web Description and Brand
 #------------------------------------------------------------------------------------------------------------------------------------------
 
+dq.score.title.brand.test <- function(product.data) {
+      
+      for (i in 1:NROW(product.data)) {
+            
+            brand <- product.data$Brand[i]
+            
+            if (is.na(product.data$Brand[i])) {
+                  
+                  product.data$check.brand[i] <- TRUE
+            }
+            
+            else if (grepl(brand, product.data$Web.Description[i]) == TRUE) {
+                  
+                  product.data$check.brand[i] <- FALSE
+            }
+            
+            else {
+                  
+                  product.data$check.brand[i] <- TRUE
+            }
+            
+      }
+      return(product.data)
+}
+
+
 dq.score.title.brand <- function(product.data) {
       
       for (i in 1:NROW(product.data)) {
@@ -227,27 +253,24 @@ dq.score.title.brand <- function(product.data) {
             
             if (is.na(product.data$Brand[i])) {
                   
-                  product.data$Title.Brand.Score[i] <- dq.score.partial.fail
                   product.data$Title.Brand[i] <- "FAIL"
             }
             
             else if (grepl(brand, product.data$Web.Description[i]) == TRUE) {
                   
                   product.data$Title.Brand[i] <- "PASS"
-                  product.data$Title.Brand.Score[i] <- 0
             }
-            
             
             else {
                   
                   product.data$Title.Brand[i] <- "FAIL"
-                  product.data$Title.Brand.Score[i] <- -50
             }
             
       }
       return(product.data)
 }
-      
+
+   
 #------------------------------------------------------------------------------------------------------------------------------------------
 # Completeness - Colour
 #------------------------------------------------------------------------------------------------------------------------------------------
