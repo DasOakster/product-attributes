@@ -1,20 +1,19 @@
 data.quality.reports <- function() {
-
-# This function is designed to take a data extract from either SAP or Wilko.com and run the Data Quality checks on the Attribute fields
-# These checks include: Format, Completeness and Consistency
-# Scores out of 100 are allocated to each product
-# Scored files are then exported for use in Excel Data Quality reports
       
-            
+      # This function is designed to take a data extract from either SAP or Wilko.com and run the Data Quality checks on the Attribute fields
+      # These checks include: Format, Completeness and Consistency
+      # Because different DQ rules are applied to each PSA1 the process creates PSA level files and then combines them into 1
+      # Scores out of 100 are allocated to each product
+      # Scored files are then exported for use in Excel Data Quality reports
+      
+      
       # Read in Scripts with Data Quality Processing functions
       source.dir <- "D:/OneDrive/R Projects/wilko-data-quality/DQ Functions/"
       dq.functions <- list.files(source.dir)
       lapply(paste(source.dir,dq.functions,sep = ""),source)
       
       # Source Directory for the SAP extracts to score
-      sap.dir <- ("D:/OneDrive/Work Files/Wilko/Data Cleanse/SAP Extracts")
-      original.dir <- "D:/OneDrive/Work Files/Wilko/Data Cleanse/Original Data Files"
-      sap.dir <- original.dir
+      sap.dir <- ("D:/OneDrive/Work Files/Wilko/Data Quality Reports/Data/Input Files")
       files.to.score <- list.files(sap.dir)
       
       # Target Directories for DQ Reporting Data Files
@@ -29,15 +28,15 @@ data.quality.reports <- function() {
             
             # Identify PSA 1 and Set up CSF Directory
             psa1 <- substr(files.to.score[i],1,3)
-            message(psa1)
+            message(files.to.score[i])
             
             # Read in Data and Subset Columns
             site.data <- read.csv(paste(sap.dir,"/",files.to.score[i],sep = ""),stringsAsFactors = FALSE)
-            site.data <- site.data[,c(1:4,6,10:21)]
+            #site.data <- site.data[,c(1:4,6,10:21)]
             
             # Get correct Size regular expression for PSA 1
             check.size <- get.size(psa1)
-
+            
             # Read in CSV files containing Crticial Attribute Web Types
             get.csf.files(psa1)
             
@@ -102,30 +101,31 @@ data.quality.reports <- function() {
             site.data$score.check<- ifelse(site.data$check == TRUE,dq.score.minor.fail,0)
             
             col.score <- colnames(site.data[grepl("score",names(site.data))])
-            
             site.data$score.dq <- 100 + rowSums(site.data[,col.score],na.rm = TRUE)
-            site.data$score.dq <- ifelse(site.data$score.dq < 0 ,0, site.data$score.dq)
+            site.data$file.name <- paste("File - ", files.to.score[i],sep = "")
+            score.file.cols <- c("file.name","Article","PSA_1", "PSA_2", "Type", "Web.Description","score.missing","score.format","score.check","score.dq")
             
-            write.csv(site.data,paste(report.dir,"Report Data/",psa1,".csv",sep = ""))
+            write.csv(site.data[,score.file.cols],paste(report.dir,"Report Data/",files.to.score[i],"_Scored_.csv",sep = ""),row.names = FALSE)
             
-            } # End Loop
-
-            setwd("D:/OneDrive/Work Files/Wilko/Data Quality Reports/Data/Report Data")
-            options("stringsAsFactors"=FALSE)
-            psa.files <- list.files(pattern = '\\.csv')
-            psa.tables <- lapply(psa.files, read.csv,header = TRUE)
-            site.data <- do.call(rbind , psa.tables)
-            write.csv(site.data,paste(report.dir,"Report Data/","SiteData.csv",sep = ""))
-            
-            
+      } # End Loop
+      
+      # Consolidate PSA files into a single file for analysis
+      setwd("D:/OneDrive/Work Files/Wilko/Data Quality Reports/Data/Report Data")
+      options("stringsAsFactors"=FALSE)
+      psa.files <- list.files(pattern = '\\.csv')
+      psa.tables <- lapply(psa.files, read.csv,header = TRUE)
+      site.data <- do.call(rbind , psa.tables)
+      write.csv(site.data,paste(report.dir,"Report Data/","SiteData.csv",sep = ""),row.names = FALSE)
+      
+      
 } # End Function
 
 #---------------------------------------------------------------------------------------------------------------
 extract.pack.qty <- function(web.description) {
-
+      
       title.pk <- ifelse(grepl("[0-9]+pk$",web.description),
                          sub(".*?([0-9]+).*", "\\1", (sub(".*?([0-9]+pk)$", "\\1", web.description,perl=TRUE)),perl=TRUE), 
-                          NA)
+                         NA)
       
       return(title.pk)
 }
@@ -134,8 +134,8 @@ extract.pack.qty <- function(web.description) {
 extract.size <- function(web.description) {
       
       title.size <- ifelse(grepl("[0-9]{1,4}(\\.[0-9]{1,2})?(g|ml|kg|L|ft)$",web.description),
-                         sub(".*?([0-9]{1,4}(\\.[0-9]{1,2})?(g|ml|kg|L|ft))$", "\\1", web.description,perl=TRUE), 
-                         NA)
+                           sub(".*?([0-9]{1,4}(\\.[0-9]{1,2})?(g|ml|kg|L|ft))$", "\\1", web.description,perl=TRUE), 
+                           NA)
       
       return(title.size)
 }
